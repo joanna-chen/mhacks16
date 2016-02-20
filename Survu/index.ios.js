@@ -3,6 +3,7 @@ const Firebase = require('firebase');
 const StatusBar = require('./components/StatusBar');
 const ActionButton = require('./components/ActionButton');
 const ListItem = require('./components/ListItem');
+const Form = require('./components/form')
 const { ListView, TextInput, Switch, SliderIOS, AlertIOS, DatePickerIOS, Picker, PickerIOS } = React;
 
 /**
@@ -17,8 +18,6 @@ import React, {
   Text,
   View
 } from 'react-native';
-
-import Form from 'react-native';
 
 const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/data';
 var ref = new Firebase(FirebaseUrl);
@@ -36,11 +35,6 @@ class Survu extends Component {
           style={styles.listview}/>
 
           <ActionButton title="Add" onPress={this._newSurvey.bind(this)} />
-
-
-
-
-
 
       </View>
     );
@@ -96,11 +90,10 @@ class Survu extends Component {
     })
   }
 
+  // if the database code is valid
+
 
 
 }
-
-
-
 
 AppRegistry.registerComponent('Survu', () => Survu);
