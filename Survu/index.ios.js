@@ -36,32 +36,37 @@ class Survu extends Component {
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this._renderItem.bind(this)}
-          style={styles.listview}/>
-
-        <ActionButton title="Add" onPress={this._newSurvey.bind(this)} />
+          style={styles.listview}
+        />
 
         <Switch
           ref='switch1'
           onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
-          style={{marginBottom: 50}}
+          style={{marginLeft: 300}}
           value={this.state.falseSwitchIsOn}
-          />
+        />
 
         <Switch
           ref='switch2'
           onValueChange={(value) => this.setState({trueSwitchIsOn: value})}
-          value={this.state.trueSwitchIsOn} />
+          style={{marginLeft: 300}}
+          value={this.state.trueSwitchIsOn}
+        />
 
         <Text style={styles.text} >
           {'Slider: ' + this.state.value}
         </Text>
+
         <SliderIOS
           ref='slider'
           {...this.props}
           onValueChange={(value) => this.setState({value: value})}
           minimumValue={0}
           maximumValue={10}
-          step={1}/>
+          step={1}
+        />
+
+        <ActionButton title="Add" onPress={this._newSurvey.bind(this)} />
 
       </View>
     );
