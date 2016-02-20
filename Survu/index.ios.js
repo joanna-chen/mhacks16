@@ -20,7 +20,8 @@ import React, {
 
 import Form from 'react-native';
 
-
+const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/data';
+var ref = new Firebase(FirebaseUrl);
 
 class Survu extends Component {
   render() {
@@ -45,6 +46,7 @@ class Survu extends Component {
     );
   }
 
+
   constructor(props) {
     super(props);
     this.state = {
@@ -55,14 +57,15 @@ class Survu extends Component {
   }
 
   _newSurvey() {
-  AlertIOS.alert(
+  var itemsRef = ref.child("anything");
+  AlertIOS.prompt(
     'Start New Survey',
     null,
     [
       {
         text: 'Start',
         onPress: (text) => {
-          this.itemsRef.push({ title: text })
+          itemsRef.push({ title: text })
         }
       },
     ],
@@ -71,8 +74,19 @@ class Survu extends Component {
 }
 
   _renderItem(item) {
+    const onPress = () => {
+      AlertIOS.alert(
+        'Complete',
+        null,
+        [
+          {text: 'Complete', onPress: (text) => this.itemsRef.child(item._key).remove()},
+          {text: 'Cancel', onPress: (text) => console.log('Cancelled')}
+        ],
+        'default'
+      );
+    };
     return (
-      <ListItem item={item} onPress={() => {}} />
+      <ListItem item={item} onPress={onPress} />
     );
   }
 
