@@ -84,7 +84,11 @@ class Survu extends Component {
       ],
       'plain-text'
     );
+    checkDB();
+    codeValid(); // just to check that it works
+  }
 
+  function checkDB() {
     ref.child("code").once("value", function(snapshot) {
       snapshot.forEach(function(childSnapshot) {
         AlertIOS.alert(
@@ -100,9 +104,8 @@ class Survu extends Component {
       });
       //codeInvalid();
     });
-    codeValid(); // just to check that it works
-  }
 
+  }
 
   function codeValid() {
     AlertIOS.alert(
