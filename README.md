@@ -76,3 +76,20 @@ Reinstall all the node modules with the correct permissions
 npm install
 ```
 
+## Run in Xcode
+
+In one terminal, run:
+
+```
+sudo npm start
+```
+
+In another terminal, run concurrently:
+
+```
+watchman watch ~
+```
+
+Open Survu/Survu.xcodeproj in XCode, and press the Play button, or cmd+R
+
+
