@@ -3,7 +3,7 @@ const Firebase = require('firebase');
 const StatusBar = require('./components/StatusBar');
 const ActionButton = require('./components/ActionButton');
 const ListItem = require('./components/ListItem');
-const { ListView, TextInput, Switch, SliderIOS, DatePickerIOS, Picker, PickerIOS } = React;
+const { ListView, TextInput, Switch, SliderIOS, AlertIOS, DatePickerIOS, Picker, PickerIOS } = React;
 
 /**
  * Sample React Native App
@@ -37,12 +37,8 @@ class Survu extends Component {
           <ActionButton title="Add" onPress={this._newSurvey.bind(this)} />
 
 
-          <Switch type="Switch" name="mySwitch" />
-          <SliderIOS type="SliderIOS" name="anotherSwitch" />
-          <DatePickerIOS type="DatePickerIOS" name="birthday" />
-          <Picker type="Picker" name="myPicker" />
 
-          <PickerIOS type="PickerIOS" name="pickers[ios]" /> // Yes, we support form serialization, like the web
+
 
 
       </View>

@@ -9,9 +9,9 @@
 
     <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/github-7d986e67a833be502d53614d9272115bc1f05240176c17f31d63739845349cf3.css" integrity="sha256-fZhuZ6gzvlAtU2FNknIRW8HwUkAXbBfzHWNzmEU0nPM=" media="all" rel="stylesheet" />
     <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/github2-26778d4c4a1040cca1cfe59166f2c1d1d809f6963a625f45718b7f00fe364e9d.css" integrity="sha256-JneNTEoQQMyhz+WRZvLB0dgJ9pY6Yl9FcYt/AP42Tp0=" media="all" rel="stylesheet" />
-    
-    
-    
+
+
+
 
     <link as="script" href="https://assets-cdn.github.com/assets/frameworks-5471d5624d64b5e0dbb0093c3149bf10a612098ebf4489374ccf9f403e3c2e86.js" rel="preload" />
     <link as="script" href="https://assets-cdn.github.com/assets/github-cee30e4db77adc5bd61cd811607b7618c331fdb3cd9ac2b38d97104fe5cd68c3.js" rel="preload" />
@@ -19,8 +19,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta name="viewport" content="width=1020">
-    
-    
+
+
     <title>react-native-form/form.js at master · julianocomg/react-native-form</title>
     <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
     <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
@@ -74,9 +74,9 @@
     <meta content="42ca3cfafc473e8d3f62d55111e27afc89fa1c0e" name="form-nonce" />
 
     <meta http-equiv="x-pjax-version" content="6621b4b6c42d21f50a4cf69d8cb3707a">
-    
 
-      
+
+
   <meta name="description" content="react-native-form - A simple react-native component to wrap your form fields and get their values with just one single method.">
   <meta name="go-import" content="github.com/julianocomg/react-native-form git https://github.com/julianocomg/react-native-form.git">
 
@@ -91,9 +91,9 @@
   <body class="logged_in   env-production macintosh vis-public page-blob">
     <a href="#start-of-content" tabindex="1" class="accessibility-aid js-skip-to-content">Skip to content</a>
 
-    
-    
-    
+
+
+
 
 
 
@@ -137,7 +137,7 @@
           </li>
       </ul>
 
-    
+
 <ul class="header-nav user-nav right" id="user-links">
   <li class="header-nav-item">
       <span class="js-socket-channel js-updatable-content"
@@ -160,7 +160,7 @@
 
     <div class="dropdown-menu-content js-menu-content">
       <ul class="dropdown-menu dropdown-menu-sw">
-        
+
 <a class="dropdown-item" href="/new" data-ga-click="Header, create new repository">
   New repository
 </a>
@@ -236,13 +236,13 @@
 </ul>
 
 
-    
+
   </div>
 </div>
 
-      
 
-      
+
+
 
 
     <div id="start-of-content" class="accessibility-aid"></div>
@@ -254,11 +254,11 @@
     <div role="main" class="main-content">
         <div itemscope itemtype="http://schema.org/SoftwareSourceCode">
     <div id="js-repo-pjax-container" class="context-loader-container js-repo-nav-next" data-pjax-container>
-      
+
 <div class="pagehead repohead instapaper_ignore readability-menu experiment-repo-nav">
   <div class="container repohead-details-container">
 
-    
+
 
 <ul class="pagehead-actions">
 
@@ -335,7 +335,7 @@
   </li>
 
   <li>
-    
+
   <div class="js-toggler-container js-social-container starring-container ">
 
     <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="/julianocomg/react-native-form/unstar" class="js-toggler-form starred js-unstar-button" data-form-nonce="42ca3cfafc473e8d3f62d55111e27afc89fa1c0e" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="eQg1ZASGlFuuKEkylzlxclNPaDKK3FvL6Jvi58eoaiTrgySkuj4nbGkL009usbyWDvzKlHPsq9HmwqRJjH5cfQ==" /></div>
@@ -404,7 +404,7 @@
 
   </div>
   <div class="container">
-    
+
 <nav class="reponav js-repo-nav js-sidenav-container-pjax js-octicon-loaders"
      itemscope
      itemtype="http://schema.org/BreadcrumbList"
@@ -455,14 +455,14 @@
 <div class="container new-discussion-timeline experiment-repo-nav">
   <div class="repository-content">
 
-    
+
 
 <a href="/julianocomg/react-native-form/blob/9319eb8589f0c5ff0207883a96a25c3414afe759/form.js" class="hidden js-permalink-shortcut" data-hotkey="y">Permalink</a>
 
 <!-- blob contrib key: blob_contributors:v21:096af9c38d6349225dee444587cae127 -->
 
 <div class="file-navigation js-zeroclipboard-container">
-  
+
 <div class="select-menu js-menu-container js-select-menu left">
   <button class="btn btn-sm select-menu-button js-menu-target css-truncate" data-hotkey="w"
     title="master"
@@ -561,7 +561,7 @@
         <strong>1</strong>
          contributor
       </a>
-      
+
     </div>
 
     <div id="blob_contributors_box" style="display:none">
@@ -611,7 +611,7 @@
   </div>
 </div>
 
-  
+
 
   <div itemprop="text" class="blob-wrapper data type-javascript">
       <table class="highlight tab-size js-file-line-container" data-tab-size="8">
@@ -1330,9 +1330,9 @@
 
 
 
-    
-    
-    
+
+
+
 
     <div id="ajax-error-message" class="ajax-error-message flash flash-error">
       <svg aria-hidden="true" class="octicon octicon-alert" height="16" role="img" version="1.1" viewBox="0 0 16 16" width="16"><path d="M15.72 12.5l-6.85-11.98C8.69 0.21 8.36 0.02 8 0.02s-0.69 0.19-0.87 0.5l-6.85 11.98c-0.18 0.31-0.18 0.69 0 1C0.47 13.81 0.8 14 1.15 14h13.7c0.36 0 0.69-0.19 0.86-0.5S15.89 12.81 15.72 12.5zM9 12H7V10h2V12zM9 9H7V5h2V9z"></path></svg>
@@ -1343,12 +1343,12 @@
     </div>
 
 
-      
+
       <script crossorigin="anonymous" integrity="sha256-VHHVYk1kteDbsAk8MUm/EKYSCY6/RIk3TM+fQD48LoY=" src="https://assets-cdn.github.com/assets/frameworks-5471d5624d64b5e0dbb0093c3149bf10a612098ebf4489374ccf9f403e3c2e86.js"></script>
       <script async="async" crossorigin="anonymous" integrity="sha256-zuMOTbd63FvWHNgRYHt2GMMx/bPNmsKzjZcQT+XNaMM=" src="https://assets-cdn.github.com/assets/github-cee30e4db77adc5bd61cd811607b7618c331fdb3cd9ac2b38d97104fe5cd68c3.js"></script>
-      
-      
-      
+
+
+
     <div class="js-stale-session-flash stale-session-flash flash flash-warn flash-banner hidden">
       <svg aria-hidden="true" class="octicon octicon-alert" height="16" role="img" version="1.1" viewBox="0 0 16 16" width="16"><path d="M15.72 12.5l-6.85-11.98C8.69 0.21 8.36 0.02 8 0.02s-0.69 0.19-0.87 0.5l-6.85 11.98c-0.18 0.31-0.18 0.69 0 1C0.47 13.81 0.8 14 1.15 14h13.7c0.36 0 0.69-0.19 0.86-0.5S15.89 12.81 15.72 12.5zM9 12H7V10h2V12zM9 9H7V5h2V9z"></path></svg>
       <span class="signed-in-tab-flash">You signed in with another tab or window. <a href="">Reload</a> to refresh your session.</span>
@@ -1366,4 +1366,3 @@
 
   </body>
 </html>
-
