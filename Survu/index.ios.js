@@ -34,8 +34,7 @@ class Survu extends Component {
           renderRow={this._renderItem.bind(this)}
           style={styles.listview}/>
 
-        <ActionButton title="Add" onPress={() => {}} />
-
+          <ActionButton title="Add" onPress={this._newSurvey.bind(this)} />
 
 
           <Switch type="Switch" name="mySwitch" />
@@ -58,6 +57,22 @@ class Survu extends Component {
       })
     };
   }
+
+  _newSurvey() {
+  AlertIOS.alert(
+    'Start New Survey',
+    null,
+    [
+      {
+        text: 'Start',
+        onPress: (text) => {
+          this.itemsRef.push({ title: text })
+        }
+      },
+    ],
+    'plain-text'
+  );
+}
 
   _renderItem(item) {
     return (
