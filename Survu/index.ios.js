@@ -1,3 +1,5 @@
+const styles = require('./styles.js')
+const Firebase = require('firebase');
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
