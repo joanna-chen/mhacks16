@@ -22,6 +22,7 @@ import React, {
 
 const resultUrl = 'https://amber-inferno-9686.firebaseio.com/result';
 
+var React = require('react-native');
 var ref_results = new Firebase(resultUrl);
 
 
@@ -58,8 +59,8 @@ ref.child("request").on("child_added", function(snapshot) {
   });
 });
 
-class Survu extends Component {
-  render() {
+var App = React.createClass({
+  render: function() {
     return (
       <View style={styles.container}>
 
@@ -105,89 +106,82 @@ class Survu extends Component {
 
       </View>
     );
-  }
+  },
 
-
-  constructor(props) {
+  constructor: function(props) {
     super(props);
-    this.state = {
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1 !== row2,
-      })
-    };
-  }
-
-  _submitSurvey() {
-    ref_results.push({
-      switch1 : this.state.switch1,
-      switch2 : this.switch2,
-      slider : this.slider
-    });
-    //will do later
-  }
-
-  _newSurvey() {
-
-
-    AlertIOS.prompt(
-      'Enter Code',
-      null,
-      [
-        {
-          text: 'Done',
-          onPress: (text) => {
-            ref.child("request").push({ reqCode: text })
-          }
-        },
-        {
-          text: 'Cancel',
-          onPress: (text) => console.log('Cancel')
-
-        }
-      ],
-      'plain-text'
+    return (
+      this.state = {
+        dataSource: new ListView.DataSource({
+          rowHasChanged: (row1, row2) => row1 !== row2,
+        })
+      };
     );
+  },
 
-    x();
-    y(); // just to check that it works
-  }
 
-  var x = function() {
-    ref.child("code").once("value", function(snapshot) {
-      snapshot.forEach(function(childSnapshot) {
-        AlertIOS.alert(
-          'next thing',
-          null,
-          [
-            {
-              text: childSnapshot.val(),
-              onPress: (text) => console.log('Ok')
+  _newSurvey: function() {
+    return (
+      AlertIOS.prompt(
+        'Enter Code',
+        null,
+        [
+          {
+            text: 'Done',
+            onPress: (text) => {
+              ref.child("request").push({ reqCode: text })
             }
-          ]
-        );
-      });
-      //codeInvalid();
-    });
-  };
+          },
+          {
+            text: 'Cancel',
+            onPress: (text) => console.log('Cancel')
 
-  var y = function() {
-    AlertIOS.alert(
-      'Code Valid',
-      null,
-      [
-        {
-          text: 'Ok',
-          onPress: (text) => console.log('Ok')
-        }
-      ]
+          }
+        ],
+        'plain-text'
+      );
+
+    //  x();
+    //  y(); // just to check that it works
     );
-  };
+  },
 
-  codeInvalid() {
+  checkDB: function() {
+    return (
+      ref.child("code").once("value", function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+          AlertIOS.alert(
+            'next thing',
+            null,
+            [
+              {
+                text: childSnapshot.val(),
+                onPress: (text) => console.log('Ok')
+              }
+            ]
+          );
+        });
+        //codeInvalid();
+      });
+    );
+  },
 
-  }
+  validCode: function() {
+    return (
+      AlertIOS.alert(
+        'Code Valid',
+        null,
+        [
+          {
+            text: 'Ok',
+            onPress: (text) => console.log('Ok')
+          }
+        ]
+      );
+    );
+  },
 
-  _renderItem(item) {
+  _renderItem: function(item) {
     const onPress = () => {
       AlertIOS.alert(
         'Complete',
@@ -202,20 +196,22 @@ class Survu extends Component {
     return (
       <ListItem item={item} onPress={onPress} />
     );
-  }
+  },
 
-  componentDidMount() {
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows([{ title: 'Pizza' }])
-    })
-  }
+  componentDidMount: function() {
+    return (
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows([{ title: 'Pizza' }])
+      })
+    );
+  },
 
   // if the database code is valid
 
 
 
 
-}
+});
 
 
 AppRegistry.registerComponent('Survu', () => Survu);
