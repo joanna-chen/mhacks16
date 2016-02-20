@@ -22,8 +22,10 @@ import Form from 'react-native';
 
 const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/data';
 const FirebaseUrlRequest = 'https://amber-inferno-9686.firebaseio.com/request'
+const FirebaseUrlCode = 'https://amber-inferno-9686.firebaseio.com/code'
 var ref = new Firebase(FirebaseUrl);
 var refRequest = new Firebase(FirebaseUrlRequest);
+var refCode = new Firebase(FirebaseUrlCode);
 
 class Survu extends Component {
   render() {
@@ -37,7 +39,7 @@ class Survu extends Component {
           renderRow={this._renderItem.bind(this)}
           style={styles.listview}/>
 
-          <ActionButton title="Add" onPress={this._newSurvey.bind(this)} />
+          <ActionButton title="New Code" onPress={this._newSurvey.bind(this)} />
       </View>
     );
   }
@@ -53,24 +55,59 @@ class Survu extends Component {
   }
 
   _newSurvey() {
-  AlertIOS.prompt(
-    'Enter Code',
-    null,
-    [
-      {
-        text: 'Done',
-        onPress: (text) => {
-          refRequest.push({ reqCode: text })
+    AlertIOS.prompt(
+      'Enter Code',
+      null,
+      [
+        {
+          text: 'Done',
+          onPress: (text) => {
+            refRequest.push({ reqCode: text })
+          }
+        },
+        {
+          text: 'Cancel',
+          onPress: (text) => console.log('Cancel')
         }
-      },
-      {
-        text: 'Cancel',
-        onPress: (text) => console.log('Cancel')
-      }
-    ],
-    'plain-text'
-  );
-}
+      ],
+      'plain-text'
+    );
+  }
+
+  refRequest.on("child_added", function(snapshot, prevChildKey) {
+    var newPost = snapshot.val();
+    console.log("Title: " + newPost.title);
+    console.log("Text: " + newPost.text);
+    console.log("Previous Post ID: " + prevChildKey);
+
+    // process the newest child (code request)
+    refCode.orderByValue().on("value", function(snapshot1) {
+      snapshot1.forEach(function(data) {
+        if (data.value === snapshot.val().reqCode) {
+          codeValid();
+          return;
+        }
+      });
+      codeInvalid();
+    });
+  });
+
+  codeValid() {
+    AlertIOS.alert(
+      'Code Valid',
+      null,
+      [
+        {
+          text: 'Ok',
+          onPress: (text) => console.log('Ok')
+        }
+      ]
+    );
+  }
+
+  codeInvalid() {
+    
+  }
 
   _renderItem(item) {
     const onPress = () => {
