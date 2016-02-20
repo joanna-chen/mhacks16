@@ -48,7 +48,7 @@ ref.child("request").on("child_added", function(snapshot) {
         return true;
       }
     }
-    codeInvalid();
+    //codeInvalid();
   });
 });
 
