@@ -61,7 +61,7 @@ ref.child("request").on("child_added", function(snapshot) {
 class Survu extends Component {
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.container} />
 
         <StatusBar title="Grocery List" />
 
@@ -71,14 +71,16 @@ class Survu extends Component {
 
 
         <Switch
-          ref='switch1'
+          name='switch1'
+          id="switch1"
           onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
           style={{marginLeft: 300, marginBottom: 50}}
           value={this.state.falseSwitchIsOn}
         />
 
         <Switch
-          ref='switch2'
+          name='switch2'
+          id="switch2"
           onValueChange={(value) => this.setState({trueSwitchIsOn: value})}
           style={{marginLeft: 300, marginBottom: 300}}
           value={this.state.trueSwitchIsOn}
@@ -89,7 +91,8 @@ class Survu extends Component {
         </Text>
 
         <SliderIOS
-          ref='slider'
+          name='slider'
+          id="slider"
           {...this.props}
           onValueChange={(value) => this.setState({value: value})}
           minimumValue={0}
@@ -119,16 +122,14 @@ class Survu extends Component {
 
   _submitSurvey() {
     ref_results.push({
-      switch1 : this.state.switch1,
-      switch2 : this.switch2,
-      slider : this.slider
+      switch1 : this.state.falseSwitchIsOn || false,
+      switch2 : this.state.trueSwitchIsOn || false,
+      slider : this.state.value || -1
     });
     //will do later
   }
 
   _newSurvey() {
-
-
     AlertIOS.prompt(
       'Enter Code',
       null,
@@ -148,10 +149,10 @@ class Survu extends Component {
       'plain-text'
     );
 
-    x();
-    y(); // just to check that it works
+    //x();
+    //y(); // just to check that it works
   }
-
+/*
   var x = function() {
     ref.child("code").once("value", function(snapshot) {
       snapshot.forEach(function(childSnapshot) {
@@ -186,7 +187,7 @@ class Survu extends Component {
   codeInvalid() {
 
   }
-
+*/
   _renderItem(item) {
     const onPress = () => {
       AlertIOS.alert(
