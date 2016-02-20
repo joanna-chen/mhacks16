@@ -3,6 +3,7 @@ const Firebase = require('firebase');
 const StatusBar = require('./components/StatusBar');
 const ActionButton = require('./components/ActionButton');
 const ListItem = require('./components/ListItem');
+const Form = require('./components.form')
 const { ListView, TextInput, Switch, SliderIOS, DatePickerIOS, Picker, PickerIOS } = React;
 
 /**
@@ -34,18 +35,9 @@ class Survu extends Component {
           renderRow={this._renderItem.bind(this)}
           style={styles.listview}/>
 
-        <ActionButton title="Add" onPress={() => {}} />
+        <ActionButton title="Add" onPress={this._addItem.bind(this)} />
 
-
-
-          <Switch type="Switch" name="mySwitch" />
-          <SliderIOS type="SliderIOS" name="anotherSwitch" />
-          <DatePickerIOS type="DatePickerIOS" name="birthday" />
-          <Picker type="Picker" name="myPicker" />
-
-          <PickerIOS type="PickerIOS" name="pickers[ios]" /> // Yes, we support form serialization, like the web
-
-
+        
       </View>
     );
   }
@@ -59,9 +51,61 @@ class Survu extends Component {
     };
   }
 
+  getRef() {
+  return new Firebase(FirebaseUrl);
+  }
+
+  listenForItems(itemsRef) {
+    itemsRef.on('value', (snap) => {
+
+      // get children as an array
+      var items = [];
+      snap.forEach((child) => {
+        items.push({
+          title: child.val().title,
+          _key: child.key()
+        });
+      });
+
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(items)
+      });
+
+    });
+  }
+
   _renderItem(item) {
+
+    const onPress = () => {
+      AlertIOS.alert(
+        'Complete',
+        null,
+        [
+          {text: 'Complete', onPress: (text) => this.itemsRef.child(item._key).remove()},
+          {text: 'Cancel', onPress: (text) => console.log('Cancelled')}
+        ],
+        'default'
+      );
+    };
+
     return (
-      <ListItem item={item} onPress={() => {}} />
+      <ListItem item={item} onPress={onPress} />
+    );
+  }
+
+  _addItem() {
+    AlertIOS.alert(
+      'Add New Item',
+      null,
+      [
+        {
+          text: 'Add',
+          onPress: (text) => {
+            this.itemsRef.push({ title: text })
+          }
+        },
+      ],
+      'plain-text'
     );
   }
 
