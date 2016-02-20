@@ -20,7 +20,6 @@ import React, {
 } from 'react-native';
 
 
-const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/data';
 const resultUrl = 'https://amber-inferno-9686.firebaseio.com/result';
 
 var ref_results = new Firebase(resultUrl);
@@ -68,7 +67,7 @@ class Survu extends Component {
 
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={this._renderItem.bind(this)}
+          renderRow={this._renderItem.bind(this)}/>
 
 
         <Switch
@@ -101,9 +100,6 @@ class Survu extends Component {
 
 
         <ActionButton title="Done" onPress={this._submitSurvey.bind(this)} />
-
-
-          style={styles.listview}/>
 
           <ActionButton title="New Code" onPress={this._newSurvey.bind(this)} />
 
@@ -146,15 +142,37 @@ class Survu extends Component {
         {
           text: 'Cancel',
           onPress: (text) => console.log('Cancel')
->
+
         }
       ],
       'plain-text'
     );
+
+    checkDB();
+    codeValid(); // just to check that it works
   }
 
+  function checkDB() {
+    ref.child("code").once("value", function(snapshot) {
+      snapshot.forEach(function(childSnapshot) {
+        AlertIOS.alert(
+          'next thing',
+          null,
+          [
+            {
+              text: childSnapshot.val(),
+              onPress: (text) => console.log('Ok')
+            }
+          ]
+        );
+      });
+      //codeInvalid();
+    });
 
-  codeValid() {
+
+  }
+
+  function codeValid() {
     AlertIOS.alert(
       'Code Valid',
       null,
