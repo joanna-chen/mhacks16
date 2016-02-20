@@ -61,7 +61,7 @@ ref.child("request").on("child_added", function(snapshot) {
 class Survu extends Component {
   render() {
     return (
-      <View style={styles.container} />
+      <View style={styles.container}>
 
         <StatusBar title="Grocery List" />
 
