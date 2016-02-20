@@ -24,7 +24,7 @@ const resultUrl = 'https://amber-inferno-9686.firebaseio.com/result';
 var ref = new Firebase(FirebaseUrl);
 var ref_results = new Firebase(resultUrl);
 
-var arr = [];
+arr = {}
 
 class Survu extends Component {
   render() {
@@ -64,7 +64,11 @@ class Survu extends Component {
           step={1}/>
 
 
-        <ActionButton title="Done" onPress={this._submitSurvey.bind(this)} />
+        <ActionButton title="Done" onPress={ref_results.set({
+        switch1 : this.switch1,
+        switch2 : this.state.switch2,
+        slider : this.state.slider
+    })} />
 
       </View>
     );
@@ -81,8 +85,9 @@ class Survu extends Component {
   }
 
   _submitSurvey() {
-    arr.push(this.state.switch1,this.state.switch2,this.state.slider);
-    ref_results.push(arr);
+    ref_results.set(
+      arr
+    );
     //will do later
   }
 
