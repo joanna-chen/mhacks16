@@ -145,6 +145,4 @@ class Survu extends Component {
 }
 
 
-
-
 AppRegistry.registerComponent('Survu', () => Survu);
