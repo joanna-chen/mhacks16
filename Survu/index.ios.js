@@ -101,7 +101,7 @@ class Survu extends Component {
 }
 
 var FirebaseTokenGenerator = require("firebase-token-generator");
-var tokenGenerator = new FirebaseTokenGenerator("<YOUR_FIREBASE_SECRET>");
+var tokenGenerator = new FirebaseTokenGenerator("<ag047mwB0skiwjhPm6W1C7lAT2LyGao2ebQsS4xy");
 var token = tokenGenerator.createToken({ uid: "uniqueId1", some: "arbitrary", data: "here" });
 
 ref.authWithCustomToken(AUTH_TOKEN, function(error, authData) {
