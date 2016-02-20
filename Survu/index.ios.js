@@ -104,7 +104,7 @@ class Survu extends Component {
   }
 
 
-  codeValid() {
+  function codeValid() {
     AlertIOS.alert(
       'Code Valid',
       null,
