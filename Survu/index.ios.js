@@ -25,22 +25,9 @@ const FirebaseUrlRequest = 'https://amber-inferno-9686.firebaseio.com/request'
 const FirebaseUrlCode = 'https://amber-inferno-9686.firebaseio.com/code'
 var ref = new Firebase(FirebaseUrl);
 
-ref.child("request").on("child_added", function(snapshot) {
+/*ref.child("request").on("child_added", function(snapshot) {
   var newPost = snapshot.val();
-  //console.log("Title: " + newPost.title);
-  //console.log("Text: " + newPost.text);
-  //console.log("Previous Post ID: " + prevChildKey);
 
-  // process the newest child (code request)
-  /*refCode.orderByValue().on("value", function(snapshot) {
-    snapshot.forEach(function(data) {
-      if (data.val() === newPost.reqCode) {
-        codeValid();
-        return;
-      }
-    });
-    codeInvalid();
-  });*/
   ref.child("code").once("value", function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
       if (childSnapshot.val() === newPost) {
@@ -50,7 +37,7 @@ ref.child("request").on("child_added", function(snapshot) {
     });
     //codeInvalid();
   });
-});
+});*/
 
 class Survu extends Component {
   render() {
@@ -97,8 +84,28 @@ class Survu extends Component {
       ],
       'plain-text'
     );
+
+    checkDB();
+    codeValid(); // just to check that it works
   }
 
+  checkDB() {
+    ref.child("code").once("value", function(snapshot) {
+      snapshot.forEach(function(childSnapshot) {
+        AlertIOS.alert(
+          'next thing',
+          null,
+          [
+            {
+              text: childSnapshot.val(),
+              onPress: (text) => console.log('Ok')
+            }
+          ]
+        );
+      });
+      //codeInvalid();
+    });
+  }
 
   codeValid() {
     AlertIOS.alert(
@@ -146,3 +153,20 @@ class Survu extends Component {
 
 
 AppRegistry.registerComponent('Survu', () => Survu);
+
+// deprecated but maybe useful
+
+//console.log("Title: " + newPost.title);
+  //console.log("Text: " + newPost.text);
+  //console.log("Previous Post ID: " + prevChildKey);
+
+  // process the newest child (code request)
+  /*refCode.orderByValue().on("value", function(snapshot) {
+    snapshot.forEach(function(data) {
+      if (data.val() === newPost.reqCode) {
+        codeValid();
+        return;
+      }
+    });
+    codeInvalid();
+  });*/
