@@ -81,9 +81,9 @@ class Survu extends Component {
     console.log("Previous Post ID: " + prevChildKey);
 
     // process the newest child (code request)
-    refCode.orderByValue().on("value", function(snapshot1) {
-      snapshot1.forEach(function(data) {
-        if (data.value === snapshot.val().reqCode) {
+    refCode.orderByValue().on("value", function(snapshot) {
+      snapshot.forEach(function(data) {
+        if (data.val().value === newPost.reqCode) {
           codeValid();
           return;
         }
@@ -106,7 +106,7 @@ class Survu extends Component {
   }
 
   codeInvalid() {
-    
+
   }
 
   _renderItem(item) {
