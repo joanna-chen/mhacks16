@@ -21,7 +21,9 @@ import React, {
 import Form from 'react-native';
 
 const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/data';
+const FirebaseUrlRequest = 'https://amber-inferno-9686.firebaseio.com/request'
 var ref = new Firebase(FirebaseUrl);
+var refRequest = new Firebase(FirebaseUrlRequest);
 
 class Survu extends Component {
   render() {
@@ -36,12 +38,6 @@ class Survu extends Component {
           style={styles.listview}/>
 
           <ActionButton title="Add" onPress={this._newSurvey.bind(this)} />
-
-
-
-
-
-
       </View>
     );
   }
@@ -57,17 +53,20 @@ class Survu extends Component {
   }
 
   _newSurvey() {
-  var itemsRef = ref.child("anything");
   AlertIOS.prompt(
-    'Start New Survey',
+    'Enter Code',
     null,
     [
       {
-        text: 'Start',
+        text: 'Done',
         onPress: (text) => {
-          itemsRef.push({ title: text })
+          refRequest.push({ reqCode: text })
         }
       },
+      {
+        text: 'Cancel',
+        onPress: (text) => console.log('Cancel')
+      }
     ],
     'plain-text'
   );
