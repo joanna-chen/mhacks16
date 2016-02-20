@@ -100,7 +100,17 @@ class Survu extends Component {
 
 }
 
+var FirebaseTokenGenerator = require("firebase-token-generator");
+var tokenGenerator = new FirebaseTokenGenerator("<YOUR_FIREBASE_SECRET>");
+var token = tokenGenerator.createToken({ uid: "uniqueId1", some: "arbitrary", data: "here" });
 
+ref.authWithCustomToken(AUTH_TOKEN, function(error, authData) {
+  if (error) {
+    console.log("Login Failed!", error);
+  } else {
+    console.log("Login Succeeded!", authData);
+  }
+});
 
 
 AppRegistry.registerComponent('Survu', () => Survu);
