@@ -24,8 +24,33 @@ const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/data';
 const FirebaseUrlRequest = 'https://amber-inferno-9686.firebaseio.com/request'
 const FirebaseUrlCode = 'https://amber-inferno-9686.firebaseio.com/code'
 var ref = new Firebase(FirebaseUrl);
-var refRequest = new Firebase(FirebaseUrlRequest);
-var refCode = new Firebase(FirebaseUrlCode);
+
+ref.child("request").on("child_added", function(snapshot) {
+  var newPost = snapshot.val();
+  //console.log("Title: " + newPost.title);
+  //console.log("Text: " + newPost.text);
+  //console.log("Previous Post ID: " + prevChildKey);
+
+  // process the newest child (code request)
+  /*refCode.orderByValue().on("value", function(snapshot) {
+    snapshot.forEach(function(data) {
+      if (data.val() === newPost.reqCode) {
+        codeValid();
+        return;
+      }
+    });
+    codeInvalid();
+  });*/
+  ref.child("code").once("value", function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      if (childSnapshot.val() === newPost.reqCode) {
+        codeValid();
+        return true;
+      }
+    }
+    codeInvalid();
+  });
+});
 
 class Survu extends Component {
   render() {
@@ -62,7 +87,7 @@ class Survu extends Component {
         {
           text: 'Done',
           onPress: (text) => {
-            refRequest.push({ reqCode: text })
+            ref.child("request").push({ reqCode: text })
           }
         },
         {
@@ -74,32 +99,6 @@ class Survu extends Component {
     );
   }
 
-  ref.child("request").on("child_added", function(snapshot) {
-    var newPost = snapshot.val();
-    //console.log("Title: " + newPost.title);
-    //console.log("Text: " + newPost.text);
-    //console.log("Previous Post ID: " + prevChildKey);
-
-    // process the newest child (code request)
-    /*refCode.orderByValue().on("value", function(snapshot) {
-      snapshot.forEach(function(data) {
-        if (data.val() === newPost.reqCode) {
-          codeValid();
-          return;
-        }
-      });
-      codeInvalid();
-    });*/
-    ref.child("code").once("value", function(snapshot) {
-      snapshot.forEach(function(childSnapshot) {
-        if (childSnapshot.val() === newPost.reqCode) {
-          codeValid();
-          return true;
-        }
-      }
-      codeInvalid();
-    });
-  });
 
   codeValid() {
     AlertIOS.alert(
