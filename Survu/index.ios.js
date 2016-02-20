@@ -21,7 +21,7 @@ import React, {
 
 const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/data';
 const resultUrl = 'https://amber-inferno-9686.firebaseio.com/result';
-var ref = new Firebase(FirebaseUrl);
+var rref = new Firebase(FirebaseUrl);
 var ref_results = new Firebase(resultUrl);
 
 arr = {}
@@ -66,10 +66,11 @@ class Survu extends Component {
           step={1}
         />
 
-        <ActionButton
-          title="Add"
+        <ActionButton title="Add"
           onPress={this._newSurvey.bind(this)}
         />
+
+        <ActionButton title="Done" onPress={this._submitSurvey.bind(this)} />
 
       </View>
     );
@@ -86,14 +87,16 @@ class Survu extends Component {
   }
 
   _submitSurvey() {
-    ref_results.set(
-      arr
-    );
+    ref_results.push({
+      switch1 : this.state.switch1,
+      switch2 : this.switch2,
+      slider : this.slider
+    });
     //will do later
   }
 
   _newSurvey() {
-  var itemsRef = ref.child("anything");
+  var itemsRef = rref.child("anything");
   AlertIOS.prompt(
     'Start New Survey',
     null,
