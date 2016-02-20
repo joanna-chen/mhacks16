@@ -81,7 +81,7 @@ class Survu extends Component {
   }
 
   _submitSurvey() {
-    arr.push(switch1.value,switch2.value,slider.value);
+    arr.push(this.state.switch1,this.state.switch2,this.state.slider);
     ref_results.push(arr);
     //will do later
   }
