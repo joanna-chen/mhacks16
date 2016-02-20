@@ -20,20 +20,37 @@ import React, {
 
 import Form from 'react-native';
 
-const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/data';
+const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/';
+const FirebaseUrlRequest = 'https://amber-inferno-9686.firebaseio.com/request'
+const FirebaseUrlCode = 'https://amber-inferno-9686.firebaseio.com/code'
 var ref = new Firebase(FirebaseUrl);
 
-ref.createUser({
-  email    : "bobtony@firebase.com",
-  password : "correcthorsebatterystaple"
-}, function(error, userData) {
-  if (error) {
-    console.log("Error creating user:", error);
-  } else {
-    console.log("Successfully created user account with uid:", userData.uid);
-  }
-});
+ref.child("request").on("child_added", function(snapshot) {
+  var newPost = snapshot.val();
+  //console.log("Title: " + newPost.title);
+  //console.log("Text: " + newPost.text);
+  //console.log("Previous Post ID: " + prevChildKey);
 
+  // process the newest child (code request)
+  /*refCode.orderByValue().on("value", function(snapshot) {
+    snapshot.forEach(function(data) {
+      if (data.val() === newPost.reqCode) {
+        codeValid();
+        return;
+      }
+    });
+    codeInvalid();
+  });*/
+  ref.child("code").once("value", function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      if (childSnapshot.val() === newPost) {
+        codeValid();
+        return true;
+      }
+    });
+    //codeInvalid();
+  });
+});
 
 class Survu extends Component {
   render() {
@@ -47,15 +64,8 @@ class Survu extends Component {
           renderRow={this._renderItem.bind(this)}
           style={styles.listview}/>
 
-          <ActionButton title="Add" onPress={this._newSurvey.bind(this)} />
-
-
-
-
-
-
+          <ActionButton title="New Code" onPress={this._newSurvey.bind(this)} />
       </View>
-
     );
   }
 
@@ -70,21 +80,42 @@ class Survu extends Component {
   }
 
   _newSurvey() {
-  var itemsRef = ref.child("anything");
-  AlertIOS.prompt(
-    'Start New Survey',
-    null,
-    [
-      {
-        text: 'Start',
-        onPress: (text) => {
-          itemsRef.push({ title: text })
+    AlertIOS.prompt(
+      'Enter Code',
+      null,
+      [
+        {
+          text: 'Done',
+          onPress: (text) => {
+            ref.child("request").push({ reqCode: text })
+          }
+        },
+        {
+          text: 'Cancel',
+          onPress: (text) => console.log('Cancel')
         }
-      },
-    ],
-    'plain-text'
-  );
-}
+      ],
+      'plain-text'
+    );
+  }
+
+
+  codeValid() {
+    AlertIOS.alert(
+      'Code Valid',
+      null,
+      [
+        {
+          text: 'Ok',
+          onPress: (text) => console.log('Ok')
+        }
+      ]
+    );
+  }
+
+  codeInvalid() {
+
+  }
 
   _renderItem(item) {
     const onPress = () => {
