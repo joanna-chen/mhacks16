@@ -23,6 +23,18 @@ import Form from 'react-native';
 const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/data';
 var ref = new Firebase(FirebaseUrl);
 
+ref.createUser({
+  email    : "bobtony@firebase.com",
+  password : "correcthorsebatterystaple"
+}, function(error, userData) {
+  if (error) {
+    console.log("Error creating user:", error);
+  } else {
+    console.log("Successfully created user account with uid:", userData.uid);
+  }
+});
+
+
 class Survu extends Component {
   render() {
     return (
@@ -43,6 +55,7 @@ class Survu extends Component {
 
 
       </View>
+
     );
   }
 
@@ -99,8 +112,6 @@ class Survu extends Component {
 
 
 }
-
-
 
 
 AppRegistry.registerComponent('Survu', () => Survu);
