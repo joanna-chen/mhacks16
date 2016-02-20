@@ -2,6 +2,10 @@
 
 ## Developing on the app
 
+Requirements:
+
+* XCode 7.2 or higher
+
 ### Install Homebrew
 
 [Reference](http://brew.sh/)
@@ -47,6 +51,8 @@ Run:
 ```
 brew install watchman
 ```
+
+Make sure you have version 4.4.0.
 
 ### Install React
 
