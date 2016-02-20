@@ -63,15 +63,6 @@ class Survu extends Component {
           maximumValue={10}
           step={1}/>
 
-if (ref_results.switch1 != undefined) {
-        <ActionButton title="Done" onPress={
-          ref_results.set({
-        switch1 : ref.switch1,
-        switch2 : ref.switch2,
-        slider : ref.slider
-      }
-    )}/>}
-
       </View>
     );
   }
