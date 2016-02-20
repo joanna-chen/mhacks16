@@ -81,7 +81,7 @@ class Survu extends Component {
     console.log("Previous Post ID: " + prevChildKey);
 
     // process the newest child (code request)
-    refCode.orderByValue().on("value", function(snapshot) {
+    refCode.orderByKey().on("child_added", function(snapshot) {
       snapshot.forEach(function(data) {
         if (data.val().value === newPost.reqCode) {
           codeValid();
