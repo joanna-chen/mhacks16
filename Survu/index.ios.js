@@ -3,7 +3,7 @@ const Firebase = require('firebase');
 const StatusBar = require('./components/StatusBar');
 const ActionButton = require('./components/ActionButton');
 const ListItem = require('./components/ListItem');
-const { ListView } = React;
+const { ListView, TextInput, Switch, SliderIOS, DatePickerIOS, Picker, PickerIOS } = React;
 
 /**
  * Sample React Native App
@@ -18,6 +18,10 @@ import React, {
   View
 } from 'react-native';
 
+import Form from 'react-native';
+
+
+
 class Survu extends Component {
   render() {
     return (
@@ -31,6 +35,16 @@ class Survu extends Component {
           style={styles.listview}/>
 
         <ActionButton title="Add" onPress={() => {}} />
+
+
+
+          <Switch type="Switch" name="mySwitch" />
+          <SliderIOS type="SliderIOS" name="anotherSwitch" />
+          <DatePickerIOS type="DatePickerIOS" name="birthday" />
+          <Picker type="Picker" name="myPicker" />
+
+          <PickerIOS type="PickerIOS" name="pickers[ios]" /> // Yes, we support form serialization, like the web
+
 
       </View>
     );
@@ -51,15 +65,14 @@ class Survu extends Component {
     );
   }
 
-
-
-
-
   componentDidMount() {
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows([{ title: 'Pizza' }])
     })
   }
+
+
+
 }
 
 
