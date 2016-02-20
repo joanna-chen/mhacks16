@@ -42,14 +42,14 @@ class Survu extends Component {
         <Switch
           ref='switch1'
           onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
-          style={{marginLeft: 300}}
+          style={{marginLeft: 300, marginBottom: 50}}
           value={this.state.falseSwitchIsOn}
         />
 
         <Switch
           ref='switch2'
           onValueChange={(value) => this.setState({trueSwitchIsOn: value})}
-          style={{marginLeft: 300}}
+          style={{marginLeft: 300, marginBottom: 300}}
           value={this.state.trueSwitchIsOn}
         />
 
@@ -66,7 +66,10 @@ class Survu extends Component {
           step={1}
         />
 
-        <ActionButton title="Add" onPress={this._newSurvey.bind(this)} />
+        <ActionButton
+          title="Add"
+          onPress={this._newSurvey.bind(this)}
+        />
 
       </View>
     );

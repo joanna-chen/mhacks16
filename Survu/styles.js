@@ -63,9 +63,10 @@ var styles = StyleSheet.create({
     paddingTop: 14,
     paddingBottom: 16,
   },
-  switch: {
+  switch2: {
     marginLeft: 300,
     marginBottom: 50,
+    marginTop: 50,
   }
 })
 
