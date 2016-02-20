@@ -74,20 +74,29 @@ class Survu extends Component {
     );
   }
 
-  refRequest.on("child_added", function(snapshot, prevChildKey) {
+  ref.child("request").on("child_added", function(snapshot) {
     var newPost = snapshot.val();
-    console.log("Title: " + newPost.title);
-    console.log("Text: " + newPost.text);
-    console.log("Previous Post ID: " + prevChildKey);
+    //console.log("Title: " + newPost.title);
+    //console.log("Text: " + newPost.text);
+    //console.log("Previous Post ID: " + prevChildKey);
 
     // process the newest child (code request)
-    refCode.orderByValue().on("value", function(snapshot) {
+    /*refCode.orderByValue().on("value", function(snapshot) {
       snapshot.forEach(function(data) {
         if (data.val() === newPost.reqCode) {
           codeValid();
           return;
         }
       });
+      codeInvalid();
+    });*/
+    ref.child("code").once("value", function(snapshot) {
+      snapshot.forEach(function(childSnapshot) {
+        if (childSnapshot.val() === newPost.reqCode) {
+          codeValid();
+          return true;
+        }
+      }
       codeInvalid();
     });
   });
