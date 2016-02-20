@@ -3,6 +3,7 @@ const Firebase = require('firebase');
 const StatusBar = require('./components/StatusBar');
 const ActionButton = require('./components/ActionButton');
 const ListItem = require('./components/ListItem');
+//const Form = require('./components/form');
 const { ListView, TextInput, Switch, SliderIOS, AlertIOS, DatePickerIOS, Picker, PickerIOS } = React;
 
 /**
@@ -18,12 +19,21 @@ import React, {
   View
 } from 'react-native';
 
+<<<<<<< HEAD
+const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/data';
+const resultUrl = 'https://amber-inferno-9686.firebaseio.com/result';
+var rref = new Firebase(FirebaseUrl);
+var ref_results = new Firebase(resultUrl);
+
+arr = {}
+=======
 import Form from 'react-native';
 
 const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/';
 const FirebaseUrlRequest = 'https://amber-inferno-9686.firebaseio.com/request'
 const FirebaseUrlCode = 'https://amber-inferno-9686.firebaseio.com/code'
 var ref = new Firebase(FirebaseUrl);
+>>>>>>> origin/master
 
 ref.child("request").on("child_added", function(snapshot) {
   var newPost = snapshot.val();
@@ -62,9 +72,48 @@ class Survu extends Component {
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this._renderItem.bind(this)}
+<<<<<<< HEAD
+          style={styles.listview}
+        />
+
+        <Switch
+          ref='switch1'
+          onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
+          style={{marginLeft: 300, marginBottom: 50}}
+          value={this.state.falseSwitchIsOn}
+        />
+
+        <Switch
+          ref='switch2'
+          onValueChange={(value) => this.setState({trueSwitchIsOn: value})}
+          style={{marginLeft: 300, marginBottom: 300}}
+          value={this.state.trueSwitchIsOn}
+        />
+
+        <Text style={styles.text} >
+          {'Slider: ' + this.state.value}
+        </Text>
+
+        <SliderIOS
+          ref='slider'
+          {...this.props}
+          onValueChange={(value) => this.setState({value: value})}
+          minimumValue={0}
+          maximumValue={10}
+          step={1}
+        />
+
+        <ActionButton title="Add"
+          onPress={this._newSurvey.bind(this)}
+        />
+
+        <ActionButton title="Done" onPress={this._submitSurvey.bind(this)} />
+
+=======
           style={styles.listview}/>
 
           <ActionButton title="New Code" onPress={this._newSurvey.bind(this)} />
+>>>>>>> origin/master
       </View>
     );
   }
@@ -79,7 +128,27 @@ class Survu extends Component {
     };
   }
 
+  _submitSurvey() {
+    ref_results.push({
+      switch1 : this.state.switch1,
+      switch2 : this.switch2,
+      slider : this.slider
+    });
+    //will do later
+  }
+
   _newSurvey() {
+<<<<<<< HEAD
+  var itemsRef = rref.child("anything");
+  AlertIOS.prompt(
+    'Start New Survey',
+    null,
+    [
+      {
+        text: 'Start',
+        onPress: (text) => {
+          itemsRef.push({ title: text })
+=======
     AlertIOS.prompt(
       'Enter Code',
       null,
@@ -93,6 +162,7 @@ class Survu extends Component {
         {
           text: 'Cancel',
           onPress: (text) => console.log('Cancel')
+>>>>>>> origin/master
         }
       ],
       'plain-text'
@@ -140,9 +210,13 @@ class Survu extends Component {
     })
   }
 
+  // if the database code is valid
 
+
+<<<<<<< HEAD
 
 }
 
-
+=======
+>>>>>>> origin/master
 AppRegistry.registerComponent('Survu', () => Survu);

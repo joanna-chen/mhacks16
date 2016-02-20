@@ -63,6 +63,11 @@ var styles = StyleSheet.create({
     paddingTop: 14,
     paddingBottom: 16,
   },
+  switch2: {
+    marginLeft: 300,
+    marginBottom: 50,
+    marginTop: 50,
+  }
 })
 
 module.exports = styles
