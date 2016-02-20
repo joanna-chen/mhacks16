@@ -147,10 +147,32 @@ class Survu extends Component {
       ],
       'plain-text'
     );
+
+    checkDB();
+    codeValid(); // just to check that it works
   }
 
+  function checkDB() {
+    ref.child("code").once("value", function(snapshot) {
+      snapshot.forEach(function(childSnapshot) {
+        AlertIOS.alert(
+          'next thing',
+          null,
+          [
+            {
+              text: childSnapshot.val(),
+              onPress: (text) => console.log('Ok')
+            }
+          ]
+        );
+      });
+      //codeInvalid();
+    });
 
-  codeValid() {
+
+  }
+
+  function codeValid() {
     AlertIOS.alert(
       'Code Valid',
       null,
