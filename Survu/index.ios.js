@@ -20,7 +20,7 @@ import React, {
 
 import Form from 'react-native';
 
-const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/data';
+const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/';
 const FirebaseUrlRequest = 'https://amber-inferno-9686.firebaseio.com/request'
 const FirebaseUrlCode = 'https://amber-inferno-9686.firebaseio.com/code'
 var ref = new Firebase(FirebaseUrl);
