@@ -43,7 +43,7 @@ ref.child("request").on("child_added", function(snapshot) {
   });*/
   ref.child("code").once("value", function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
-      if (childSnapshot.val() === newPost.reqCode) {
+      if (childSnapshot.val() === newPost) {
         codeValid();
         return true;
       }
