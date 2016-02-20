@@ -3,6 +3,7 @@ const Firebase = require('firebase');
 const StatusBar = require('./components/StatusBar');
 const ActionButton = require('./components/ActionButton');
 const ListItem = require('./components/ListItem');
+//const Form = require('./components/form');
 const { ListView, TextInput, Switch, SliderIOS, AlertIOS, DatePickerIOS, Picker, PickerIOS } = React;
 
 /**
@@ -18,16 +19,34 @@ import React, {
   View
 } from 'react-native';
 
-import Form from 'react-native';
+
+const resultUrl = 'https://amber-inferno-9686.firebaseio.com/result';
+
+var ref_results = new Firebase(resultUrl);
+
+
 
 const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/';
-const FirebaseUrlRequest = 'https://amber-inferno-9686.firebaseio.com/request'
-const FirebaseUrlCode = 'https://amber-inferno-9686.firebaseio.com/code'
+
 var ref = new Firebase(FirebaseUrl);
 
-/*ref.child("request").on("child_added", function(snapshot) {
-  var newPost = snapshot.val();
 
+ref.child("request").on("child_added", function(snapshot) {
+  var newPost = snapshot.val();
+  //console.log("Title: " + newPost.title);
+  //console.log("Text: " + newPost.text);
+  //console.log("Previous Post ID: " + prevChildKey);
+
+  // process the newest child (code request)
+  /*refCode.orderByValue().on("value", function(snapshot) {
+    snapshot.forEach(function(data) {
+      if (data.val() === newPost.reqCode) {
+        codeValid();
+        return;
+      }
+    });
+    codeInvalid();
+  });*/
   ref.child("code").once("value", function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
       if (childSnapshot.val() === newPost) {
@@ -37,7 +56,7 @@ var ref = new Firebase(FirebaseUrl);
     });
     //codeInvalid();
   });
-});*/
+});
 
 class Survu extends Component {
   render() {
@@ -48,10 +67,42 @@ class Survu extends Component {
 
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={this._renderItem.bind(this)}
-          style={styles.listview}/>
+          renderRow={this._renderItem.bind(this)}/>
+
+
+        <Switch
+          ref='switch1'
+          onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
+          style={{marginLeft: 300, marginBottom: 50}}
+          value={this.state.falseSwitchIsOn}
+        />
+
+        <Switch
+          ref='switch2'
+          onValueChange={(value) => this.setState({trueSwitchIsOn: value})}
+          style={{marginLeft: 300, marginBottom: 300}}
+          value={this.state.trueSwitchIsOn}
+        />
+
+        <Text style={styles.text} >
+          {'Slider: ' + this.state.value}
+        </Text>
+
+        <SliderIOS
+          ref='slider'
+          {...this.props}
+          onValueChange={(value) => this.setState({value: value})}
+          minimumValue={0}
+          maximumValue={10}
+          step={1}
+        />
+
+
+
+        <ActionButton title="Done" onPress={this._submitSurvey.bind(this)} />
 
           <ActionButton title="New Code" onPress={this._newSurvey.bind(this)} />
+
       </View>
     );
   }
@@ -66,7 +117,18 @@ class Survu extends Component {
     };
   }
 
+  _submitSurvey() {
+    ref_results.push({
+      switch1 : this.state.switch1,
+      switch2 : this.switch2,
+      slider : this.slider
+    });
+    //will do later
+  }
+
   _newSurvey() {
+
+
     AlertIOS.prompt(
       'Enter Code',
       null,
@@ -80,31 +142,15 @@ class Survu extends Component {
         {
           text: 'Cancel',
           onPress: (text) => console.log('Cancel')
+
         }
       ],
       'plain-text'
     );
-
-    ref.child("code").once("value", function(snapshot) {
-      snapshot.forEach(function(childSnapshot) {
-        AlertIOS.alert(
-          'next thing',
-          null,
-          [
-            {
-              text: childSnapshot.val(),
-              onPress: (text) => console.log('Ok')
-            }
-          ]
-        );
-      });
-      //codeInvalid();
-    });
-    codeValid(); // just to check that it works
   }
 
 
-  function codeValid() {
+  codeValid() {
     AlertIOS.alert(
       'Code Valid',
       null,
@@ -144,26 +190,12 @@ class Survu extends Component {
     })
   }
 
+  // if the database code is valid
+
+
 
 
 }
 
 
 AppRegistry.registerComponent('Survu', () => Survu);
-
-// deprecated but maybe useful
-
-//console.log("Title: " + newPost.title);
-  //console.log("Text: " + newPost.text);
-  //console.log("Previous Post ID: " + prevChildKey);
-
-  // process the newest child (code request)
-  /*refCode.orderByValue().on("value", function(snapshot) {
-    snapshot.forEach(function(data) {
-      if (data.val() === newPost.reqCode) {
-        codeValid();
-        return;
-      }
-    });
-    codeInvalid();
-  });*/
