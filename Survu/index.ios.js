@@ -19,12 +19,48 @@ import React, {
   View
 } from 'react-native';
 
+<<<<<<< HEAD
 const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/data';
 const resultUrl = 'https://amber-inferno-9686.firebaseio.com/result';
 var rref = new Firebase(FirebaseUrl);
 var ref_results = new Firebase(resultUrl);
 
 arr = {}
+=======
+import Form from 'react-native';
+
+const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/';
+const FirebaseUrlRequest = 'https://amber-inferno-9686.firebaseio.com/request'
+const FirebaseUrlCode = 'https://amber-inferno-9686.firebaseio.com/code'
+var ref = new Firebase(FirebaseUrl);
+>>>>>>> origin/master
+
+ref.child("request").on("child_added", function(snapshot) {
+  var newPost = snapshot.val();
+  //console.log("Title: " + newPost.title);
+  //console.log("Text: " + newPost.text);
+  //console.log("Previous Post ID: " + prevChildKey);
+
+  // process the newest child (code request)
+  /*refCode.orderByValue().on("value", function(snapshot) {
+    snapshot.forEach(function(data) {
+      if (data.val() === newPost.reqCode) {
+        codeValid();
+        return;
+      }
+    });
+    codeInvalid();
+  });*/
+  ref.child("code").once("value", function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      if (childSnapshot.val() === newPost) {
+        codeValid();
+        return true;
+      }
+    });
+    //codeInvalid();
+  });
+});
 
 class Survu extends Component {
   render() {
@@ -36,6 +72,7 @@ class Survu extends Component {
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this._renderItem.bind(this)}
+<<<<<<< HEAD
           style={styles.listview}
         />
 
@@ -72,6 +109,11 @@ class Survu extends Component {
 
         <ActionButton title="Done" onPress={this._submitSurvey.bind(this)} />
 
+=======
+          style={styles.listview}/>
+
+          <ActionButton title="New Code" onPress={this._newSurvey.bind(this)} />
+>>>>>>> origin/master
       </View>
     );
   }
@@ -96,6 +138,7 @@ class Survu extends Component {
   }
 
   _newSurvey() {
+<<<<<<< HEAD
   var itemsRef = rref.child("anything");
   AlertIOS.prompt(
     'Start New Survey',
@@ -105,12 +148,44 @@ class Survu extends Component {
         text: 'Start',
         onPress: (text) => {
           itemsRef.push({ title: text })
+=======
+    AlertIOS.prompt(
+      'Enter Code',
+      null,
+      [
+        {
+          text: 'Done',
+          onPress: (text) => {
+            ref.child("request").push({ reqCode: text })
+          }
+        },
+        {
+          text: 'Cancel',
+          onPress: (text) => console.log('Cancel')
+>>>>>>> origin/master
         }
-      },
-    ],
-    'plain-text'
-  );
-}
+      ],
+      'plain-text'
+    );
+  }
+
+
+  codeValid() {
+    AlertIOS.alert(
+      'Code Valid',
+      null,
+      [
+        {
+          text: 'Ok',
+          onPress: (text) => console.log('Ok')
+        }
+      ]
+    );
+  }
+
+  codeInvalid() {
+
+  }
 
   _renderItem(item) {
     const onPress = () => {
@@ -138,7 +213,10 @@ class Survu extends Component {
   // if the database code is valid
 
 
+<<<<<<< HEAD
 
 }
 
+=======
+>>>>>>> origin/master
 AppRegistry.registerComponent('Survu', () => Survu);
