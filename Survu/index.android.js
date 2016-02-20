@@ -1,3 +1,10 @@
+const styles = require('./styles.js')
+const Firebase = require('firebase');
+const StatusBar = require('./components/StatusBar');
+const ActionButton = require('./components/ActionButton');
+const ListItem = require('./components/ListItem');
+const { ListView } = React;
+
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -15,37 +22,47 @@ class Survu extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or press menu button for dev menu
-        </Text>
+
+        <StatusBar title="Grocery List" />
+
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this._renderItem.bind(this)}
+          style={styles.listview}/>
+
+        <ActionButton title="Add" onPress={() => {}} />
+
       </View>
     );
   }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2,
+      })
+    };
+  }
+
+  _renderItem(item) {
+    return (
+      <ListItem item={item} onPress={() => {}} />
+    );
+  }
+
+
+
+
+
+  componentDidMount() {
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows([{ title: 'Pizza' }])
+    })
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+
+
 
 AppRegistry.registerComponent('Survu', () => Survu);
