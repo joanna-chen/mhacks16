@@ -123,7 +123,7 @@ class Survu extends Component {
     return (
       <View style={styles.container}>
 
-        <StatusBar title="My Surveys" barStyle="light-content" style="styles.statusbar"/>
+        <StatusBar title="Survu" barStyle="light-content" style="styles.statusbar"/>
 
 
         <TabBarIOS
@@ -132,7 +132,7 @@ class Survu extends Component {
           <TabBarIOS.Item
             title='Add Survey'
             icon={require('./res/plus.png')}
-            selected={true}
+            selected={this.state.selectedTab ==='Add Survey'}
             onPress={() => {
               if (state === "needSurvey") {
                 AlertIOS.alert("Please finish your current survey first")
@@ -144,23 +144,23 @@ class Survu extends Component {
               }
             }}>
             <View>
-            <Text style={{marginTop : 300}}>Welcome!</Text>
+            <ActionButton title="Welcome!" style={{paddingBottom: 100}} />
             <ActionButton title="New Code" onPress={this._newSurvey.bind(this)}
-              style={{marginTop: 400}}/>
+              style={{marginTop: 600}}/>
 
             </View>
           </TabBarIOS.Item>
           <TabBarIOS.Item
-            title="My Surveys"
+            title="Survey"
             icon={require('./res/list.png')}
-            selected={this.state.selectedTab === 'My Surveys'}
+            selected={this.state.selectedTab ==='Survey'}
             onPress={() => {
               if (state === "needCode") {
                 AlertIOS.alert("Please enter a survey code first")
               }
               else {
                 this.setState({
-                  selectedTab: 'My Surveys',
+                  selectedTab: 'Survey',
                 });
               }
             }}>
@@ -228,13 +228,13 @@ class Survu extends Component {
               });
             }}>
             <View>
-              <Text>
+              <Text style='./styles.creditText'>
                 You have made ${(amountMade).toFixed(2)} with Survu!
               </Text>
-              <Text>
+              <Text style='./styles.creditText'>
                 Credit Card: ************{creditCard.substring(12,19)}
               </Text>
-              <Text>
+              <Text style='./styles.creditText'>
                 Expiry: {expiryDate}
               </Text>
             </View>

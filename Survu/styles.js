@@ -5,6 +5,10 @@ const constants = {
 };
 
 var styles = StyleSheet.create({
+  creditText: {
+    textAlign : 'center',
+    fontSize : 16
+  },
   titleText: {
     backgroundColor: constants.actionColor,
     color: 'white',
