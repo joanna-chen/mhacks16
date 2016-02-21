@@ -61,7 +61,18 @@ ref.child("request").on("child_added", function(snapshot, prevChildKey) {
       }
     });
     if (!found) {
-      console.log("you suck");
+      // alert!!!/////////////////////////////
+      AlertIOS.alert(
+        'Unfortunately, you entered an invalid code.',
+        null,
+        [
+          {
+            text: 'Ok',
+            onPress: (text) => console.log('Ok')
+          }
+        ]
+      );
+      //////////////////////////////////////
     }
     //codeInvalid();
   });
@@ -176,7 +187,7 @@ class Survu extends Component {
     });
   };*/
 
-  validCode() {
+  /*validCode() {
     AlertIOS.alert(
       'Survey Added',
       null,
@@ -200,7 +211,7 @@ class Survu extends Component {
         }
       ]
     );
-  }
+  }*/
 
   _renderItem(item) {
     const onPress = () => {
