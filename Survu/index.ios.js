@@ -1,10 +1,11 @@
 const styles = require('./styles.js')
 const Firebase = require('firebase');
+const constants = styles.constants;
 const StatusBar = require('./components/StatusBar');
 const ActionButton = require('./components/ActionButton');
 const ListItem = require('./components/ListItem');
 //const Form = require('./components/form');
-const { ListView, TextInput, Switch, SliderIOS, AlertIOS, DatePickerIOS, Picker, PickerIOS } = React;
+const { TabBarIOS, ListView, TextInput, Switch, SliderIOS, AlertIOS, DatePickerIOS, Picker, PickerIOS } = React;
 
 /**
  * Sample React Native App
@@ -23,46 +24,57 @@ import React, {
 const resultUrl = 'https://amber-inferno-9686.firebaseio.com/result';
 
 var ref_results = new Firebase(resultUrl);
-
+var TabBarItemIOS = TabBarIOS.Item;
 
 
 const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/';
 
 var ref = new Firebase(FirebaseUrl);
 
-
+// "listener" for testing if code is valid
 ref.child("request").on("child_added", function(snapshot, prevChildKey) {
-  var newPost = snapshot.reqCode;
+  var newPost = snapshot.val().reqCode; // the value of the code being validated
+  console.log(snapshot.val().reqCode);
 
   console.log("Title: " + newPost);
-  //console.log("Text: " + newPost.text);
-  //console.log("Previous Post ID: " + prevChildKey);
-
-  // process the newest child (code request)
-  /*refCode.orderByValue().on("value", function(snapshot) {
-    snapshot.forEach(function(data) {
-      if (data.val() === newPost.reqCode) {
-        codeValid();
-        return;
-      }
-    });
-    codeInvalid();
-  });
-  */
-  ref.child("code").once("value", function(snapshot) {
+  ref.child("code").once("value", function(snapshot1) {
     var found = false;
-    snapshot.forEach(function(childSnapshot) {
+    snapshot1.forEach(function(childSnapshot) {
       if (found) return;
       if (childSnapshot.val() === newPost) {
         console.log("found one");
+
+        // alert!!!/////////////////////////////
+        AlertIOS.alert(
+          'Survey Added',
+          null,
+          [
+            {
+              text: 'Ok',
+              onPress: (text) => console.log('Ok')
+            }
+          ]
+        );
+        //////////////////////////////////////
+
         found = true;
+        ref.child("request").set(null);
       }
     });
-
-    if (found) {
-      console.log("found one");
+    if (!found) {
+      // alert!!!/////////////////////////////
+      AlertIOS.alert(
+        'Unfortunately, you entered an invalid code.',
+        null,
+        [
+          {
+            text: 'Ok',
+            onPress: (text) => console.log('Ok')
+          }
+        ]
+      );
+      //////////////////////////////////////
     }
-    console.log("not one");
     //codeInvalid();
   });
 });
@@ -72,52 +84,97 @@ class Survu extends Component {
     return (
       <View style={styles.container}>
 
-        <StatusBar title="Grocery List" />
-
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this._renderItem.bind(this)}/>
+        <StatusBar title="My Surveys" barStyle="light-content" style="styles.statusbar"/>
 
 
-        <Switch
-          name='switch1'
-          id="switch1"
-          onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
-          style={{marginLeft: 300, marginBottom: 50}}
-          value={this.state.falseSwitchIsOn}
-        />
+        <TabBarIOS
+          tintColor="white"
+          barTintColor={constants.actionColor}>
+          <TabBarIOS.Item
+            title="Blue Tab"
+            systemIcon="contacts"
+            selected={this.state.selectedTab === 'blueTab'}
+            onPress={() => {
+              this.setState({
+                selectedTab: 'blueTab',
+              });
+            }}>
+            <View>
+            <ListView
+              dataSource={this.state.dataSource}
+              renderRow={this._renderItem.bind(this)}
+              />
+            <Switch
+              name='switch1'
+              id="switch1"
+              onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
+              style={{marginLeft: 300}}
+              value={this.state.falseSwitchIsOn}
+            />
 
-        <Switch
-          name='switch2'
-          id="switch2"
-          onValueChange={(value) => this.setState({trueSwitchIsOn: value})}
-          style={{marginLeft: 300, marginBottom: 300}}
-          value={this.state.trueSwitchIsOn}
-        />
+            <Switch
+              name='switch2'
+              id="switch2"
+              onValueChange={(value) => this.setState({trueSwitchIsOn: value})}
+              style={{marginLeft: 300}}
+              value={this.state.trueSwitchIsOn}
+            />
 
-        <Text style={styles.text} >
-          {'Slider: ' + this.state.value}
-        </Text>
-
-        <SliderIOS
-          name='slider'
-          id="slider"
-          {...this.props}
-          onValueChange={(value) => this.setState({value: value})}
-          minimumValue={0}
-          maximumValue={10}
-          step={1}
-        />
+            <Text style={styles.text} >
+              {'Slider: ' + this.state.value}
+            </Text>
 
 
 
-        <ActionButton title="Done" onPress={this._submitSurvey.bind(this)} />
+            <SliderIOS
+              name='slider'
+              id="slider"
+              {...this.props}
+              onValueChange={(value) => this.setState({value: value})}
+              minimumValue={0}
+              maximumValue={10}
+              step={1}
+            />
 
-          <ActionButton title="New Code" onPress={this._newSurvey.bind(this)} />
+            <ActionButton title="Done" onPress={this._submitSurvey.bind(this)}
+              style={{marginBottom: 200}}/>
+            <Text></Text>
+            </View>
+          </TabBarIOS.Item>
+          <TabBarIOS.Item
+            systemIcon="history"
+            selected={this.state.selectedTab === 'redTab'}
+            onPress={() => {
+              this.setState({
+                selectedTab: 'redTab',
+              });
+            }}>
+            <View>
+            <ActionButton title="New Code" onPress={this._newSurvey.bind(this)}
+              style={{marginBottom: 200}}/>
+            <Text></Text>
+            </View>
+          </TabBarIOS.Item>
+          <TabBarIOS.Item
+            systemIcon="featured"
+            title="More"
+            selected={this.state.selectedTab === 'greenTab'}
+            onPress={() => {
+              this.setState({
+                selectedTab: 'greenTab',
+              });
+            }}>
+            <View>
+            <Text></Text>
+            </View>
+          </TabBarIOS.Item>
+        </TabBarIOS>
+
 
       </View>
     );
   }
+
 
 
   constructor(props) {
@@ -178,11 +235,11 @@ class Survu extends Component {
       });
       //codeInvalid();
     });
-  };
+  };*/
 
-  var y = function() {
+  /*validCode() {
     AlertIOS.alert(
-      'Code Valid',
+      'Survey Added',
       null,
       [
         {
@@ -191,12 +248,21 @@ class Survu extends Component {
         }
       ]
     );
-  };
+  }
 
   codeInvalid() {
+    AlertIOS.alert(
+      'Unfortunately, the code you entered is invalid.',
+      null,
+      [
+        {
+          text: 'Ok',
+          onPress: (text) => console.log('Ok')
+        }
+      ]
+    );
+  }*/
 
-  }
-*/
   _renderItem(item) {
     const onPress = () => {
       AlertIOS.alert(
@@ -222,10 +288,16 @@ class Survu extends Component {
 
   // if the database code is valid
 
-
+  /*_renderContent (color: string, pageText: string, num?: number) {
+    <View style={[styles.tabContent, {backgroundColor: color}]}>
+      <Text style={styles.tabText}>{pageText}</Text>
+      <Text style={styles.tabText}>{num} re-renders of the {pageText}</Text>
+    </View>
+  }*/
 
 
 }
+
 
 
 AppRegistry.registerComponent('Survu', () => Survu);

@@ -1,10 +1,17 @@
 const React = require('react-native')
 const {StyleSheet} = React
 const constants = {
-  actionColor: '#24CE84'
+  actionColor: '#50cfe0'
 };
 
 var styles = StyleSheet.create({
+  titleText: {
+    backgroundColor: constants.actionColor,
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'center',
+    height: 20,
+  },
   container: {
     backgroundColor: '#f2f2f2',
     flex: 1,
@@ -45,7 +52,8 @@ var styles = StyleSheet.create({
   },
   statusbar: {
     backgroundColor: '#fff',
-    height: 22,
+    color: constants.actionColor,
+    height: 20,
   },
   center: {
     textAlign: 'center',
@@ -62,6 +70,18 @@ var styles = StyleSheet.create({
     paddingLeft: 16,
     paddingTop: 14,
     paddingBottom: 16,
+  },
+  tabContent: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  tabText: {
+    color: 'white',
+    margin: 50,
+  },
+  text: {
+    color: 'white',
+    marginBottom: 250,
   },
 })
 
