@@ -68,14 +68,6 @@ sudo npm install -g react-native-cli
 npm install
 ```
 
-### Install Base64
-
-This is for encoding things:
-
-```
-sudo npm install Base64
-```
-
 ### If you have trouble with unlocking files for access in Xcode
 
 Remove all the node modules:
