@@ -32,25 +32,24 @@ var ref = new Firebase(FirebaseUrl);
 
 // "listener" for testing if code is valid
 ref.child("request").on("child_added", function(snapshot, prevChildKey) {
-  var newPost = snapshot.reqCode; // the value of the code being validated
+  var newPost = snapshot.val().reqCode; // the value of the code being validated
+  console.log(snapshot.val().reqCode);
 
   console.log("Title: " + newPost);
-  ref.child("code").once("value", function(snapshot) {
+  ref.child("code").once("value", function(snapshot1) {
     var found = false;
-    snapshot.forEach(function(childSnapshot) {
+    snapshot1.forEach(function(childSnapshot) {
       if (found) return;
       if (childSnapshot.val() === newPost) {
         console.log("found one");
-        validCode();
+        //validCode();
         found = true;
-        ref.child("request").child(snapshot).set(null);
+        ref.child("request").set(null);
       }
     });
-
-    if (found) {
-      //console.log("found one");
+    if (!found) {
+      console.log("you suck");
     }
-    //console.log("not one");
     //codeInvalid();
   });
 });
