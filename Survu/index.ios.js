@@ -51,9 +51,11 @@ if (authData) {
     if (error) {
       console.log("Login Failed!", error);
     } else {
+      var creditCardText = "123123"
+      var expiryDateText = "4321"
       console.log("Authenticated successfully with payload:", authData);
-      AlertIOS.prompt("Credit card expiry (YYYY-MM)", null, expiryDate => console.log("expiry date "+expiryDate), "plain-text", "2015-10")
-      AlertIOS.prompt("Credit card number", null, creditCard => console.log("credit card "+creditCard), "plain-text", "4895142232120006")
+      AlertIOS.prompt("Credit card expiry (YYYY-MM)", null, expiryDateText => expiryDate = expiryDateText, "plain-text", "2015-10")
+      AlertIOS.prompt("Credit card number", null, creditCardText => creditCard = creditCardText, "plain-text", "4895142232120006")
       console.log("credit card 1: " + creditCard)
       ref_user.child(authData.uid).set({
           creditCard: creditCard,
@@ -212,6 +214,12 @@ class Survu extends Component {
             <View>
             <Text>
               You have made ${(amountMade).toFixed(2)} with Survu!
+            </Text>
+            <Text>
+              Credit Card: ************{creditCard.substring(12,19)}
+            </Text>
+            <Text>
+              Expiry: {expiryDate}
             </Text>
             </View>
           </TabBarIOS.Item>
