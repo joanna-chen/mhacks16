@@ -30,39 +30,27 @@ const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/';
 
 var ref = new Firebase(FirebaseUrl);
 
-
+// "listener" for testing if code is valid
 ref.child("request").on("child_added", function(snapshot, prevChildKey) {
-  var newPost = snapshot.reqCode;
+  var newPost = snapshot.reqCode; // the value of the code being validated
 
   console.log("Title: " + newPost);
-  //console.log("Text: " + newPost.text);
-  //console.log("Previous Post ID: " + prevChildKey);
-
-  // process the newest child (code request)
-  /*refCode.orderByValue().on("value", function(snapshot) {
-    snapshot.forEach(function(data) {
-      if (data.val() === newPost.reqCode) {
-        codeValid();
-        return;
-      }
-    });
-    codeInvalid();
-  });
-  */
   ref.child("code").once("value", function(snapshot) {
     var found = false;
     snapshot.forEach(function(childSnapshot) {
       if (found) return;
       if (childSnapshot.val() === newPost) {
         console.log("found one");
+        validCode();
         found = true;
+        ref.child("request").child(snapshot).set(null);
       }
     });
 
     if (found) {
-      console.log("found one");
+      //console.log("found one");
     }
-    console.log("not one");
+    //console.log("not one");
     //codeInvalid();
   });
 });
@@ -109,16 +97,12 @@ class Survu extends Component {
           step={1}
         />
 
-
-
         <ActionButton title="Done" onPress={this._submitSurvey.bind(this)} />
-
-          <ActionButton title="New Code" onPress={this._newSurvey.bind(this)} />
+        <ActionButton title="New Code" onPress={this._newSurvey.bind(this)} />
 
       </View>
     );
   }
-
 
   constructor(props) {
     super(props);
@@ -178,11 +162,11 @@ class Survu extends Component {
       });
       //codeInvalid();
     });
-  };
+  };*/
 
-  var y = function() {
+  validCode() {
     AlertIOS.alert(
-      'Code Valid',
+      'Survey Added',
       null,
       [
         {
@@ -191,12 +175,21 @@ class Survu extends Component {
         }
       ]
     );
-  };
+  }
 
   codeInvalid() {
-
+    AlertIOS.alert(
+      'Unfortunately, the code you entered is invalid.',
+      null,
+      [
+        {
+          text: 'Ok',
+          onPress: (text) => console.log('Ok')
+        }
+      ]
+    );
   }
-*/
+
   _renderItem(item) {
     const onPress = () => {
       AlertIOS.alert(
