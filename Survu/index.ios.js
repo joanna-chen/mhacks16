@@ -1,10 +1,11 @@
 const styles = require('./styles.js')
 const Firebase = require('firebase');
+const constants = styles.constants;
 const StatusBar = require('./components/StatusBar');
 const ActionButton = require('./components/ActionButton');
 const ListItem = require('./components/ListItem');
 //const Form = require('./components/form');
-const { ListView, TextInput, Switch, SliderIOS, AlertIOS, DatePickerIOS, Picker, PickerIOS } = React;
+const { TabBarIOS, ListView, TextInput, Switch, SliderIOS, AlertIOS, DatePickerIOS, Picker, PickerIOS } = React;
 
 /**
  * Sample React Native App
@@ -23,7 +24,7 @@ import React, {
 const resultUrl = 'https://amber-inferno-9686.firebaseio.com/result';
 
 var ref_results = new Firebase(resultUrl);
-
+var TabBarItemIOS = TabBarIOS.Item;
 
 
 const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/';
@@ -83,18 +84,19 @@ class Survu extends Component {
     return (
       <View style={styles.container}>
 
-        <StatusBar title="Grocery List" />
+        <StatusBar title="My Surveys" barStyle="light-content" style="styles.statusbar"/>
 
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={this._renderItem.bind(this)}/>
+          renderRow={this._renderItem.bind(this)}
+          />
 
 
         <Switch
           name='switch1'
           id="switch1"
           onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
-          style={{marginLeft: 300, marginBottom: 50}}
+          style={{marginLeft: 300}}
           value={this.state.falseSwitchIsOn}
         />
 
@@ -102,13 +104,15 @@ class Survu extends Component {
           name='switch2'
           id="switch2"
           onValueChange={(value) => this.setState({trueSwitchIsOn: value})}
-          style={{marginLeft: 300, marginBottom: 300}}
+          style={{marginLeft: 300}}
           value={this.state.trueSwitchIsOn}
         />
 
         <Text style={styles.text} >
           {'Slider: ' + this.state.value}
         </Text>
+
+
 
         <SliderIOS
           name='slider'
@@ -120,12 +124,57 @@ class Survu extends Component {
           step={1}
         />
 
-        <ActionButton title="Done" onPress={this._submitSurvey.bind(this)} />
-        <ActionButton title="New Code" onPress={this._newSurvey.bind(this)} />
+        <ActionButton title="Done" onPress={this._submitSurvey.bind(this)}
+          style={{marginBottom: 200}}/>
+        <ActionButton title="New Code" onPress={this._newSurvey.bind(this)}
+          style={{marginBottom: 200}}/>
 
+        <TabBarIOS
+          tintColor="white"
+          barTintColor={constants.actionColor}>
+          <TabBarIOS.Item
+            title="Blue Tab"
+            systemIcon="contacts"
+            selected={this.state.selectedTab === 'blueTab'}
+            onPress={() => {
+              this.setState({
+                selectedTab: 'blueTab',
+              });
+            }}>
+            <View>
+            <Text>"Hey One"</Text>
+            </View>
+          </TabBarIOS.Item>
+          <TabBarIOS.Item
+            systemIcon="history"
+            selected={this.state.selectedTab === 'redTab'}
+            onPress={() => {
+              this.setState({
+                selectedTab: 'redTab',
+              });
+            }}>
+            <View>
+            <Text>"Hey Two"</Text>
+            </View>
+          </TabBarIOS.Item>
+          <TabBarIOS.Item
+            systemIcon="featured"
+            title="More"
+            selected={this.state.selectedTab === 'greenTab'}
+            onPress={() => {
+              this.setState({
+                selectedTab: 'greenTab',
+              });
+            }}>
+            <View>
+            <Text>"Hey Three"</Text>
+            </View>
+          </TabBarIOS.Item>
+        </TabBarIOS>
       </View>
     );
   }
+
 
   constructor(props) {
     super(props);
@@ -238,10 +287,16 @@ class Survu extends Component {
 
   // if the database code is valid
 
-
+  /*_renderContent (color: string, pageText: string, num?: number) {
+    <View style={[styles.tabContent, {backgroundColor: color}]}>
+      <Text style={styles.tabText}>{pageText}</Text>
+      <Text style={styles.tabText}>{num} re-renders of the {pageText}</Text>
+    </View>
+  }*/
 
 
 }
+
 
 
 AppRegistry.registerComponent('Survu', () => Survu);
