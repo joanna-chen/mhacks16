@@ -30,6 +30,38 @@ const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/';
 
 var ref = new Firebase(FirebaseUrl);
 
+
+const userUrl = 'https://amber-inferno-9686.firebaseio.com/user';
+
+var ref_user = new Firebase(userUrl);
+
+var authData = ref.getAuth();
+
+var creditCard;
+
+if (authData) {
+  console.log("User " + authData.uid + " is logged in with " + authData.provider);
+  ref_user.child(authData.uid).once("value", function (snapshot) {
+    creditCard = snapshot.val()
+  })
+} else {
+  ref.authAnonymously(function(error, authData) {
+    if (error) {
+      console.log("Login Failed!", error);
+    } else {
+      console.log("Authenticated successfully with payload:", authData);
+      ref_user.child(authData.uid).set({
+          creditCard: 123249487,
+      });
+      creditCard = 123249487
+    }
+  });
+}
+
+
+
+
+
 // "listener" for testing if code is valid
 ref.child("request").on("child_added", function(snapshot, prevChildKey) {
   var newPost = snapshot.val().reqCode; // the value of the code being validated
