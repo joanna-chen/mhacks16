@@ -31,9 +31,10 @@ const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/';
 var ref = new Firebase(FirebaseUrl);
 
 
-ref.child("request").on("child_added", function(snapshot) {
-  var newPost = snapshot.val();
-  //console.log("Title: " + newPost.title);
+ref.child("request").on("child_added", function(snapshot, prevChildKey) {
+  var newPost = snapshot.reqCode;
+
+  console.log("Title: " + newPost);
   //console.log("Text: " + newPost.text);
   //console.log("Previous Post ID: " + prevChildKey);
 
@@ -46,14 +47,22 @@ ref.child("request").on("child_added", function(snapshot) {
       }
     });
     codeInvalid();
-  });*/
+  });
+  */
   ref.child("code").once("value", function(snapshot) {
+    var found = false;
     snapshot.forEach(function(childSnapshot) {
+      if (found) return;
       if (childSnapshot.val() === newPost) {
-        codeValid();
-        return true;
+        console.log("found one");
+        found = true;
       }
     });
+
+    if (found) {
+      console.log("found one");
+    }
+    console.log("not one");
     //codeInvalid();
   });
 });
