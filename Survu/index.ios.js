@@ -237,8 +237,55 @@ class Survu extends Component {
       switch2 : this.state.trueSwitchIsOn || false,
       slider : this.state.value || -1
     });
+    // GET PAID!!
+    fetch("https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pushfundstransactions", {
+      method:
+        "POST",
+      header: JSON.stringify({
+        Accept: "application/json,application/octet-stream",
+        Authorization: "blippityblapblap" + ':' + "password"}),
+      body: JSON.stringify({
+        acquirerCountryCode: "840",
+        acquiringBin: "408999",
+        amount: "124.02",
+        businessApplicationId: "AA",
+        cardAcceptor: {
+          address: {
+            country: "USA",
+            county: "San Mateo",
+            state: "CA",
+            zipCode: "94404"
+          },
+          idCode: "ABCD1234ABCD123",
+          name: "Visa Inc. USA-Foster City",
+          terminalId: "ABCD1234"
+        },
+        cavv: "0700100038238906000013405823891061668252",
+        foreignExchangeFeeTransaction: "0.20",
+        localTransactionDateTime: "2016-02-21T03:54:09",
+        retrievalReferenceNumber: "330000550000",
+        senderCardExpiryDate: expiryDate,
+        senderCurrencyCode: "USD",
+        senderPrimaryAccountNumber: creditCard,
+        surcharge: "0",
+        systemsTraceAuditNumber: "451001"})
+      })
+    .then((response) => response.json())
+    .then((responseData) => {
+      authData = ref.getAuth();
+      ref_user.child(authData.uid).child("amountMade").once("value", function (snapshot) {
+        amountMade = snapshot.val()
+      })
+      amountMade = amountMade + 0.20
+      ref_user.child(authData.uid).update({amountMade: amountMade});
+        AlertIOS.alert(
+            "VISA CREDIT",
+            "$0.20 Payment Sent! Total amount made is $" + (amountMade).toFixed(2)
+        )
+        console.log("RESPONSE BODY: " + JSON.stringify(responseData.body))
+    })
+    .done();
     state = "needCode"
-    //will do later
   }
 
   _newSurvey() {
