@@ -51,8 +51,8 @@ if (authData) {
       console.log("Login Failed!", error);
     } else {
       console.log("Authenticated successfully with payload:", authData);
-      AlertIOS.prompt("Credit card expiry (YYYY-MM)", null, expiryDate => console.log("expiry date "+expiryDate))
-      AlertIOS.prompt("Credit card number", null, creditCard => console.log("credit card "+creditCard))
+      AlertIOS.prompt("Credit card expiry (YYYY-MM)", null, expiryDate => console.log("expiry date "+expiryDate), "plain-text", "2015-10")
+      AlertIOS.prompt("Credit card number", null, creditCard => console.log("credit card "+creditCard), "plain-text", "4895142232120006")
       console.log("credit card 1: " + creditCard)
       ref_user.child(authData.uid).set({
           creditCard: creditCard
@@ -154,7 +154,48 @@ class Survu extends Component {
       switch2 : this.state.trueSwitchIsOn || false,
       slider : this.state.value || -1
     });
-    //will do later
+    // GET PAID!!
+    fetch("https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pushfundstransactions", {
+      method:
+        "POST",
+      header: JSON.stringify({
+        Accept: "application/json,application/octet-stream",
+        Authorization: "blippityblapblap" + ':' + "password"}),
+      body: JSON.stringify({
+        acquirerCountryCode: "840",
+        acquiringBin: "408999",
+        amount: "124.02",
+        businessApplicationId: "AA",
+        cardAcceptor: {
+          address: {
+            country: "USA",
+            county: "San Mateo",
+            state: "CA",
+            zipCode: "94404"
+          },
+          idCode: "ABCD1234ABCD123",
+          name: "Visa Inc. USA-Foster City",
+          terminalId: "ABCD1234"
+        },
+        cavv: "0700100038238906000013405823891061668252",
+        foreignExchangeFeeTransaction: "0.20",
+        localTransactionDateTime: "2016-02-21T03:54:09",
+        retrievalReferenceNumber: "330000550000",
+        senderCardExpiryDate: expiryDate,
+        senderCurrencyCode: "USD",
+        senderPrimaryAccountNumber: creditCard,
+        surcharge: "0",
+        systemsTraceAuditNumber: "451001"})
+      })
+    .then((response) => response.json())
+    .then((responseData) => {
+        AlertIOS.alert(
+            "VISA CREDIT",
+            "$0.20 Payment Sent!"
+        )
+        console.log("RESPONSE BODY: " + JSON.stringify(responseData.body))
+    })
+    .done();
   }
 
   _newSurvey() {
