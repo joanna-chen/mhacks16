@@ -31,6 +31,38 @@ const FirebaseUrl = 'https://amber-inferno-9686.firebaseio.com/';
 
 var ref = new Firebase(FirebaseUrl);
 
+const userUrl = 'https://amber-inferno-9686.firebaseio.com/user';
+
+var ref_user = new Firebase(userUrl);
+
+var authData = ref.getAuth();
+
+var creditCard = "123";
+var expiryDate = "123";
+var amountMade = 0;
+
+if (authData) {
+  console.log("User " + authData.uid + " is logged in with " + authData.provider);
+  ref_user.child(authData.uid).child("creditCard").once("value", function (snapshot) {
+    creditCard = snapshot.val()
+  })
+} else {
+  ref.authAnonymously(function(error, authData) {
+    if (error) {
+      console.log("Login Failed!", error);
+    } else {
+      console.log("Authenticated successfully with payload:", authData);
+      AlertIOS.prompt("Credit card expiry (YYYY-MM)", null, expiryDate => console.log("expiry date "+expiryDate), "plain-text", "2015-10")
+      AlertIOS.prompt("Credit card number", null, creditCard => console.log("credit card "+creditCard), "plain-text", "4895142232120006")
+      console.log("credit card 1: " + creditCard)
+      ref_user.child(authData.uid).set({
+          creditCard: creditCard,
+          amountMade: 0
+      });
+    }
+  });
+}
+
 // "listener" for testing if code is valid
 ref.child("request").on("child_added", function(snapshot, prevChildKey) {
   var newPost = snapshot.val().reqCode; // the value of the code being validated
