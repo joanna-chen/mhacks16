@@ -85,12 +85,14 @@ ref.child("request").on("child_added", function(snapshot, prevChildKey) {
           [
             {
               text: 'Ok',
-              
+
               onPress: (text) => console.log('Ok')
+
             }
           ]
         );
         state = "needSurvey"
+
         //////////////////////////////////////
 
         found = true;
@@ -128,24 +130,71 @@ class Survu extends Component {
           tintColor="white"
           barTintColor={constants.actionColor}>
           <TabBarIOS.Item
-            title="Blue Tab"
-            systemIcon="contacts"
-            selected={this.state.selectedTab === 'blueTab'}
+            title='Add Survey'
+            icon={require('./res/plus.png')}
+            selected={true}
+            onPress={() => {
+              if (state === "needSurvey") {
+                AlertIOS.alert("Please finish your current survey first")
+              }
+              else {
+                this.setState({
+                  selectedTab: 'Add Survey',
+                });
+              }
+            }}>
+            <View>
+            <Text style={{marginTop : 300}}>Welcome!</Text>
+            <ActionButton title="New Code" onPress={this._newSurvey.bind(this)}
+              style={{marginTop: 400}}/>
+
+            </View>
+          </TabBarIOS.Item>
+          <TabBarIOS.Item
+            title="My Surveys"
+            icon={require('./res/list.png')}
+            selected={this.state.selectedTab === 'My Surveys'}
             onPress={() => {
               if (state === "needCode") {
                 AlertIOS.alert("Please enter a survey code first")
               }
               else {
                 this.setState({
-                  selectedTab: 'blueTab',
+                  selectedTab: 'My Surveys',
                 });
               }
             }}>
-            <View>
+
+            <View backgroundColor='white'>
             <ListView
               dataSource={this.state.dataSource}
               renderRow={this._renderItem.bind(this)}
               />
+            <Text style={styles.text} >
+              What is your overall satisfaction level with our service?
+            </Text>
+            <SliderIOS
+              name='slider1'
+              {...this.props}
+              onValueChange={(value) => this.setState({value: value})}
+              minimumValue={0}
+              maximumValue={5}
+              step={1}
+            />
+            <Text style={styles.text} >
+              How would you rate our product?
+            </Text>
+            <SliderIOS
+              name='slider2'
+              {...this.props}
+              onValueChange={(value) => this.setState({value: value})}
+              minimumValue={0}
+              maximumValue={5}
+              step={1}
+            />
+            <Text style={styles.text} >
+              Are you above the age of 16?
+            </Text>
             <Switch
               name='switch1'
               id="switch1"
@@ -153,7 +202,9 @@ class Survu extends Component {
               style={{marginLeft: 300}}
               value={this.state.falseSwitchIsOn}
             />
-
+            <Text style={styles.text} >
+              Would you do business with us again?
+            </Text>
             <Switch
               name='switch2'
               id="switch2"
@@ -162,65 +213,30 @@ class Survu extends Component {
               value={this.state.trueSwitchIsOn}
             />
 
-            <Text style={styles.text} >
-              {'Slider: ' + this.state.value}
-            </Text>
-
-
-
-            <SliderIOS
-              name='slider'
-              id="slider"
-              {...this.props}
-              onValueChange={(value) => this.setState({value: value})}
-              minimumValue={0}
-              maximumValue={10}
-              step={1}
-            />
 
             <ActionButton title="Done" onPress={this._submitSurvey.bind(this)}
-              style={{marginBottom: 200}}/>
-            <Text></Text>
+              style={{marginBottom: 100}}/>
             </View>
           </TabBarIOS.Item>
           <TabBarIOS.Item
-            systemIcon="history"
-            selected={this.state.selectedTab === 'redTab'}
-            onPress={() => {
-              if (state === "needSurvey") {
-                AlertIOS.alert("Please finish your current survey first")
-              }
-              else {
-                this.setState({
-                  selectedTab: 'redTab',
-                });
-              }
-            }}>
-            <View>
-            <ActionButton title="New Code" onPress={this._newSurvey.bind(this)}
-              style={{marginBottom: 200}}/>
-            <Text></Text>
-            </View>
-          </TabBarIOS.Item>
-          <TabBarIOS.Item
-            systemIcon="featured"
-            title="More"
-            selected={this.state.selectedTab === 'greenTab'}
+            title='Profile'
+            icon={require('./res/user.png')}
+            selected={this.state.selectedTab === 'Profile'}
             onPress={() => {
               this.setState({
-                selectedTab: 'greenTab',
+                selectedTab: 'Profile',
               });
             }}>
             <View>
-            <Text>
-              You have made ${(amountMade).toFixed(2)} with Survu!
-            </Text>
-            <Text>
-              Credit Card: ************{creditCard.substring(12,19)}
-            </Text>
-            <Text>
-              Expiry: {expiryDate}
-            </Text>
+              <Text>
+                You have made ${(amountMade).toFixed(2)} with Survu!
+              </Text>
+              <Text>
+                Credit Card: ************{creditCard.substring(12,19)}
+              </Text>
+              <Text>
+                Expiry: {expiryDate}
+              </Text>
             </View>
           </TabBarIOS.Item>
         </TabBarIOS>
@@ -382,11 +398,11 @@ class Survu extends Component {
     );
   }
 
-  componentDidMount() {
+  /*componentDidMount() {
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows([{ title: 'Pizza' }])
     })
-  }
+  }*/
 
   // if the database code is valid
 

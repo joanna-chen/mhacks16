@@ -80,10 +80,13 @@ var styles = StyleSheet.create({
     margin: 50,
   },
   text: {
-    color: 'white',
-    marginBottom: 250,
+    color: 'black',
+  },
+  slider: {
+    marginLeft: 30,
+    marginRight: 30,
   },
 })
 
-module.exports = styles
+module.exports = styles;
 module.exports.constants = constants;
