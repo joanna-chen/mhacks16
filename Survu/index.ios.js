@@ -56,6 +56,7 @@ ref.child("request").on("child_added", function(snapshot, prevChildKey) {
             }
           ]
         );
+        state = "needSurvey"
         //////////////////////////////////////
 
         found = true;
@@ -227,7 +228,6 @@ class Survu extends Component {
       ],
       'plain-text'
     );
-    state = "needSurvey"
     //x();
     //y(); // just to check that it works
   }
