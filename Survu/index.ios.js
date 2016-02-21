@@ -45,6 +45,7 @@ if (authData) {
   ref_user.child(authData.uid).once("value", function (snapshot) {
     creditCard = snapshot.val()
   })
+ _newSurvey()
 } else {
   ref.authAnonymously(function(error, authData) {
     if (error) {
@@ -57,6 +58,7 @@ if (authData) {
       ref_user.child(authData.uid).set({
           creditCard: creditCard
       });
+      _newSurvey()
     }
   });
 }
@@ -88,6 +90,27 @@ ref.child("request").on("child_added", function(snapshot, prevChildKey) {
     //codeInvalid();
   });
 });
+
+function _newSurvey() {
+  AlertIOS.prompt(
+    'Enter Code',
+    null,
+    [
+      {
+        text: 'Done',
+        onPress: (text) => {
+          ref.child("request").push({ reqCode: text })
+        }
+      },
+      {
+        text: 'Cancel',
+        onPress: (text) => console.log('Cancel')
+
+      }
+    ],
+    'plain-text'
+  );
+}
 
 
 class Survu extends Component {
@@ -133,7 +156,7 @@ class Survu extends Component {
         />
 
         <ActionButton title="Done" onPress={this._submitSurvey.bind(this)} />
-        <ActionButton title="New Code" onPress={this._newSurvey.bind(this)} />
+        <ActionButton title="New Code" onPress={_newSurvey.bind(this)} />
 
       </View>
     );
@@ -198,29 +221,8 @@ class Survu extends Component {
     .done();
   }
 
-  _newSurvey() {
-    AlertIOS.prompt(
-      'Enter Code',
-      null,
-      [
-        {
-          text: 'Done',
-          onPress: (text) => {
-            ref.child("request").push({ reqCode: text })
-          }
-        },
-        {
-          text: 'Cancel',
-          onPress: (text) => console.log('Cancel')
 
-        }
-      ],
-      'plain-text'
-    );
 
-    //x();
-    //y(); // just to check that it works
-  }
 /*
   var x = function() {
     ref.child("code").once("value", function(snapshot) {
