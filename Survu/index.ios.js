@@ -39,10 +39,11 @@ var authData = ref.getAuth();
 
 var creditCard = "123";
 var expiryDate = "123";
+var amountMade = 0;
 
 if (authData) {
   console.log("User " + authData.uid + " is logged in with " + authData.provider);
-  ref_user.child(authData.uid).once("value", function (snapshot) {
+  ref_user.child(authData.uid).child("creditCard").once("value", function (snapshot) {
     creditCard = snapshot.val()
   })
  _newSurvey()
@@ -56,7 +57,8 @@ if (authData) {
       AlertIOS.prompt("Credit card number", null, creditCard => console.log("credit card "+creditCard), "plain-text", "4895142232120006")
       console.log("credit card 1: " + creditCard)
       ref_user.child(authData.uid).set({
-          creditCard: creditCard
+          creditCard: creditCard,
+          amountMade: 0
       });
       _newSurvey()
     }
@@ -212,9 +214,15 @@ class Survu extends Component {
       })
     .then((response) => response.json())
     .then((responseData) => {
+      authData = ref.getAuth();
+      ref_user.child(authData.uid).child("amountMade").once("value", function (snapshot) {
+        amountMade = snapshot.val()
+      })
+      amountMade = amountMade + 0.20
+      ref_user.child(authData.uid).update({amountMade: amountMade});
         AlertIOS.alert(
             "VISA CREDIT",
-            "$0.20 Payment Sent!"
+            "$0.20 Payment Sent! Total amount made is $" + (amountMade).toFixed(2)
         )
         console.log("RESPONSE BODY: " + JSON.stringify(responseData.body))
     })
