@@ -42,7 +42,20 @@ ref.child("request").on("child_added", function(snapshot, prevChildKey) {
       if (found) return;
       if (childSnapshot.val() === newPost) {
         console.log("found one");
-        //validCode();
+
+        // alert!!!/////////////////////////////
+        AlertIOS.alert(
+          'Survey Added',
+          null,
+          [
+            {
+              text: 'Ok',
+              onPress: (text) => console.log('Ok')
+            }
+          ]
+        );
+        //////////////////////////////////////
+
         found = true;
         ref.child("request").set(null);
       }
@@ -53,7 +66,6 @@ ref.child("request").on("child_added", function(snapshot, prevChildKey) {
     //codeInvalid();
   });
 });
-
 
 class Survu extends Component {
   render() {
