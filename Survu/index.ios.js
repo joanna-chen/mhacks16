@@ -86,48 +86,6 @@ class Survu extends Component {
 
         <StatusBar title="My Surveys" barStyle="light-content" style="styles.statusbar"/>
 
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this._renderItem.bind(this)}
-          />
-
-
-        <Switch
-          name='switch1'
-          id="switch1"
-          onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
-          style={{marginLeft: 300}}
-          value={this.state.falseSwitchIsOn}
-        />
-
-        <Switch
-          name='switch2'
-          id="switch2"
-          onValueChange={(value) => this.setState({trueSwitchIsOn: value})}
-          style={{marginLeft: 300}}
-          value={this.state.trueSwitchIsOn}
-        />
-
-        <Text style={styles.text} >
-          {'Slider: ' + this.state.value}
-        </Text>
-
-
-
-        <SliderIOS
-          name='slider'
-          id="slider"
-          {...this.props}
-          onValueChange={(value) => this.setState({value: value})}
-          minimumValue={0}
-          maximumValue={10}
-          step={1}
-        />
-
-        <ActionButton title="Done" onPress={this._submitSurvey.bind(this)}
-          style={{marginBottom: 200}}/>
-        <ActionButton title="New Code" onPress={this._newSurvey.bind(this)}
-          style={{marginBottom: 200}}/>
 
         <TabBarIOS
           tintColor="white"
@@ -142,7 +100,45 @@ class Survu extends Component {
               });
             }}>
             <View>
-            <Text>"Hey One"</Text>
+            <ListView
+              dataSource={this.state.dataSource}
+              renderRow={this._renderItem.bind(this)}
+              />
+            <Switch
+              name='switch1'
+              id="switch1"
+              onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
+              style={{marginLeft: 300}}
+              value={this.state.falseSwitchIsOn}
+            />
+
+            <Switch
+              name='switch2'
+              id="switch2"
+              onValueChange={(value) => this.setState({trueSwitchIsOn: value})}
+              style={{marginLeft: 300}}
+              value={this.state.trueSwitchIsOn}
+            />
+
+            <Text style={styles.text} >
+              {'Slider: ' + this.state.value}
+            </Text>
+
+
+
+            <SliderIOS
+              name='slider'
+              id="slider"
+              {...this.props}
+              onValueChange={(value) => this.setState({value: value})}
+              minimumValue={0}
+              maximumValue={10}
+              step={1}
+            />
+
+            <ActionButton title="Done" onPress={this._submitSurvey.bind(this)}
+              style={{marginBottom: 200}}/>
+            <Text></Text>
             </View>
           </TabBarIOS.Item>
           <TabBarIOS.Item
@@ -154,7 +150,9 @@ class Survu extends Component {
               });
             }}>
             <View>
-            <Text>"Hey Two"</Text>
+            <ActionButton title="New Code" onPress={this._newSurvey.bind(this)}
+              style={{marginBottom: 200}}/>
+            <Text></Text>
             </View>
           </TabBarIOS.Item>
           <TabBarIOS.Item
@@ -167,13 +165,16 @@ class Survu extends Component {
               });
             }}>
             <View>
-            <Text>"Hey Three"</Text>
+            <Text></Text>
             </View>
           </TabBarIOS.Item>
         </TabBarIOS>
+
+
       </View>
     );
   }
+
 
 
   constructor(props) {
