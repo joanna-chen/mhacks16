@@ -37,7 +37,8 @@ var ref_user = new Firebase(userUrl);
 
 var authData = ref.getAuth();
 
-var creditCard;
+var creditCard = "123";
+var expiryDate = "123";
 
 if (authData) {
   console.log("User " + authData.uid + " is logged in with " + authData.provider);
@@ -50,10 +51,12 @@ if (authData) {
       console.log("Login Failed!", error);
     } else {
       console.log("Authenticated successfully with payload:", authData);
+      AlertIOS.prompt("Credit card expiry (YYYY-MM)", null, expiryDate => console.log("expiry date "+expiryDate))
+      AlertIOS.prompt("Credit card number", null, creditCard => console.log("credit card "+creditCard))
+      console.log("credit card 1: " + creditCard)
       ref_user.child(authData.uid).set({
-          creditCard: 123249487,
+          creditCard: creditCard
       });
-      creditCard = 123249487
     }
   });
 }
