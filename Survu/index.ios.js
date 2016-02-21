@@ -210,7 +210,9 @@ class Survu extends Component {
               });
             }}>
             <View>
-            <Text></Text>
+            <Text>
+              You have made ${(amountMade).toFixed(2)} with Survu!
+            </Text>
             </View>
           </TabBarIOS.Item>
         </TabBarIOS>
