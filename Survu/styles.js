@@ -1,13 +1,18 @@
 const React = require('react-native')
 const {StyleSheet} = React
 const constants = {
-  actionColor: '#50cfe0'
+  actionColor: '#50cfe0',
+  font: 'Lato-Light',
+  weight: '700'
 };
 
 var styles = StyleSheet.create({
   creditText: {
     textAlign : 'center',
-    fontSize : 16
+    fontSize : 16,
+    fontFamily: constants.font,
+    fontWeight: constants.weight,
+    margin: 20,
   },
   titleText: {
     backgroundColor: constants.actionColor,
@@ -15,9 +20,11 @@ var styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     height: 20,
+    fontFamily: constants.font,
+    fontWeight: constants.weight,
   },
   container: {
-    backgroundColor: '#f2f2f2',
+    backgroundColor: '#fff',
     flex: 1,
   },
   listview: {
@@ -38,6 +45,8 @@ var styles = StyleSheet.create({
   liText: {
     color: '#333',
     fontSize: 16,
+    fontFamily: constants.font,
+    fontWeight: constants.weight,
   },
   navbar: {
     alignItems: 'center',
@@ -52,7 +61,9 @@ var styles = StyleSheet.create({
   navbarTitle: {
     color: '#444',
     fontSize: 16,
-    fontWeight: "500"
+    fontWeight: "500",
+    fontFamily: constants.font,
+    fontWeight: constants.weight,
   },
   statusbar: {
     backgroundColor: '#fff',
@@ -66,14 +77,19 @@ var styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     textAlign: 'center',
+    paddingTop: 13,
+    fontFamily: constants.font,
+    fontWeight: constants.weight,
   },
   action: {
     backgroundColor: constants.actionColor,
     borderColor: 'transparent',
     borderWidth: 1,
-    paddingLeft: 16,
-    paddingTop: 14,
-    paddingBottom: 16,
+    width: 150,
+    height: 50,
+    borderRadius: 25,
+    textAlign: 'center',
+    marginLeft: 112
   },
   tabContent: {
     flex: 1,
@@ -82,13 +98,29 @@ var styles = StyleSheet.create({
   tabText: {
     color: 'white',
     margin: 50,
+    fontFamily: constants.font,
+    fontWeight: constants.weight,
   },
   text: {
     color: 'black',
+    fontFamily: constants.font,
+    fontWeight: constants.weight,
   },
   slider: {
     marginLeft: 30,
     marginRight: 30,
+  },
+  welcomeText: {
+    margin:50,
+    fontSize:45,
+    textAlign:'center',
+    fontFamily: constants.font,
+    fontWeight: constants.weight,
+  },
+  qtext: {
+    fontFamily: constants.font,
+    fontWeight: constants.weight,
+    margin: 20,
   },
 })
 

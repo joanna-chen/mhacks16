@@ -119,7 +119,10 @@ ref.child("request").on("child_added", function(snapshot, prevChildKey) {
 
 var state = "needCode"
 class Survu extends Component {
+
   render() {
+
+    console.log("state: " + JSON.stringify(this.state));
     return (
       <View style={styles.container}>
 
@@ -128,6 +131,7 @@ class Survu extends Component {
 
         <TabBarIOS
           tintColor="white"
+
           barTintColor={constants.actionColor}>
           <TabBarIOS.Item
             title='Add Survey'
@@ -143,8 +147,10 @@ class Survu extends Component {
                 });
               }
             }}>
-            <View>
-            <ActionButton title="Welcome!" style={{paddingBottom: 100}} />
+            <View style={styles.container}>
+            <Text style={{margin:50, fontSize:45, textAlign:'center'}}
+              fontFamily={constants.font}
+              fontWeight={constants.weight}>Welcome!</Text>
             <ActionButton title="New Code" onPress={this._newSurvey.bind(this)}
               style={{marginTop: 600}}/>
 
@@ -161,6 +167,10 @@ class Survu extends Component {
               else {
                 this.setState({
                   selectedTab: 'Survey',
+                  value1: 0,
+                  value2: 0,
+                  falseSwitchIsOn: false,
+                  trueSwitchIsOn: false,
                 });
               }
             }}>
@@ -170,52 +180,52 @@ class Survu extends Component {
               dataSource={this.state.dataSource}
               renderRow={this._renderItem.bind(this)}
               />
-            <Text style={styles.text} >
+            <Text style={styles.qtext} >
               What is your overall satisfaction level with our service?
             </Text>
             <SliderIOS
               name='slider1'
               {...this.props}
-              onValueChange={(value) => this.setState({value: value})}
+              onValueChange={(value) => this.setState({value1: value})}
               minimumValue={0}
               maximumValue={5}
               step={1}
             />
-            <Text style={styles.text} >
+            <Text style={styles.qtext} >
               How would you rate our product?
             </Text>
             <SliderIOS
               name='slider2'
               {...this.props}
-              onValueChange={(value) => this.setState({value: value})}
+              onValueChange={(value) => this.setState({value2: value})}
               minimumValue={0}
               maximumValue={5}
               step={1}
             />
-            <Text style={styles.text} >
+            <Text style={styles.qtext} >
               Are you above the age of 16?
             </Text>
             <Switch
               name='switch1'
               id="switch1"
               onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
-              style={{marginLeft: 300}}
+              style={{marginLeft:10}}
               value={this.state.falseSwitchIsOn}
             />
-            <Text style={styles.text} >
+            <Text style={styles.qtext} >
               Would you do business with us again?
             </Text>
             <Switch
               name='switch2'
               id="switch2"
               onValueChange={(value) => this.setState({trueSwitchIsOn: value})}
-              style={{marginLeft: 300}}
+              style={{marginLeft:10}}
               value={this.state.trueSwitchIsOn}
             />
 
 
             <ActionButton title="Done" onPress={this._submitSurvey.bind(this)}
-              style={{marginBottom: 100}}/>
+              style={{marginBottom: 20}}/>
             </View>
           </TabBarIOS.Item>
           <TabBarIOS.Item
@@ -227,14 +237,14 @@ class Survu extends Component {
                 selectedTab: 'Profile',
               });
             }}>
-            <View>
-              <Text style='./styles.creditText'>
+            <View backgroundColor='white' style={{justifyContent:'center'}}>
+              <Text style={styles.creditText}>
                 You have made ${(amountMade).toFixed(2)} with Survu!
               </Text>
-              <Text style='./styles.creditText'>
+              <Text style={styles.creditText}>
                 Credit Card: ************{creditCard.substring(12,19)}
               </Text>
-              <Text style='./styles.creditText'>
+              <Text style={styles.creditText}>
                 Expiry: {expiryDate}
               </Text>
             </View>
@@ -253,7 +263,8 @@ class Survu extends Component {
     this.state = {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
-      })
+      }),
+      selectedTab: "Add Survey"
     };
   }
 
@@ -261,7 +272,8 @@ class Survu extends Component {
     ref_results.push({
       switch1 : this.state.falseSwitchIsOn || false,
       switch2 : this.state.trueSwitchIsOn || false,
-      slider : this.state.value || -1
+      slider1 : this.state.value1 || -1,
+      slider2 : this.state.value2 || -1
     });
     // GET PAID!!
     fetch("https://sandbox.api.visa.com/visadirect/fundstransfer/v1/pushfundstransactions", {
