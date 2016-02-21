@@ -56,3 +56,24 @@ brew install watchman
 sudo npm install -g react-native-cli
 ```
 
+### Install all the node modules
+
+```
+npm install
+```
+
+### If you have trouble with unlocking files for access in Xcode
+
+Remove all the node modules:
+
+```
+rm -rf node_modules/
+```
+
+Reinstall all the node modules with the correct permissions
+
+```
+npm install
+```
+
+
