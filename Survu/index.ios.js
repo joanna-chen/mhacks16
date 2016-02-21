@@ -51,6 +51,7 @@ ref.child("request").on("child_added", function(snapshot, prevChildKey) {
           [
             {
               text: 'Ok',
+              
               onPress: (text) => console.log('Ok')
             }
           ]
@@ -79,6 +80,7 @@ ref.child("request").on("child_added", function(snapshot, prevChildKey) {
   });
 });
 
+var state = "needCode"
 class Survu extends Component {
   render() {
     return (
@@ -95,9 +97,14 @@ class Survu extends Component {
             systemIcon="contacts"
             selected={this.state.selectedTab === 'blueTab'}
             onPress={() => {
-              this.setState({
-                selectedTab: 'blueTab',
-              });
+              if (state === "needCode") {
+                AlertIOS.alert("Please enter a survey code first")
+              }
+              else {
+                this.setState({
+                  selectedTab: 'blueTab',
+                });
+              }
             }}>
             <View>
             <ListView
@@ -145,9 +152,14 @@ class Survu extends Component {
             systemIcon="history"
             selected={this.state.selectedTab === 'redTab'}
             onPress={() => {
-              this.setState({
-                selectedTab: 'redTab',
-              });
+              if (state === "needSurvey") {
+                AlertIOS.alert("Please finish your current survey first")
+              }
+              else {
+                this.setState({
+                  selectedTab: 'redTab',
+                });
+              }
             }}>
             <View>
             <ActionButton title="New Code" onPress={this._newSurvey.bind(this)}
@@ -192,6 +204,7 @@ class Survu extends Component {
       switch2 : this.state.trueSwitchIsOn || false,
       slider : this.state.value || -1
     });
+    state = "needCode"
     //will do later
   }
 
@@ -214,7 +227,7 @@ class Survu extends Component {
       ],
       'plain-text'
     );
-
+    state = "needSurvey"
     //x();
     //y(); // just to check that it works
   }
