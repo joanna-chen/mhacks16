@@ -1,5 +1,11 @@
 # Survey app
 
+## Playing with the app
+
+### Authentication codes
+
+To authenticate your receipt while the app is running, click 'New Code' and use one of codes `22`, `ji`, or `ab`.
+
 ## Developing on the app
 
 ### Install Homebrew
