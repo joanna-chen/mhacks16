@@ -1,4 +1,8 @@
-# Survey app
+# Survu: A Survey App with a Twist
+
+Survu is a survey app that allows companies to gather data in a more consistent manner by providing the consumers with an incentive as well. Each time after the client or consumer utilizes a service, they can enter a code found on their receipt into our app. Once on out app, they'll be able to connect their credit card and take a short survey. In return for their time and opinion, they'll receive a small sum of money into their bank account. Survu supplies companies with affordable data while also helping the general public using the app benefit.
+
+See more at http://devpost.com/software/mhacks16
 
 ## Developing on the app
 
