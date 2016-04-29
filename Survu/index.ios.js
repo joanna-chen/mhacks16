@@ -100,6 +100,7 @@ ref.child("request").on("child_added", function(snapshot, prevChildKey) {
       }
     });
     if (!found) {
+      ref.child("request").set(null);
       // alert!!!/////////////////////////////
       AlertIOS.alert(
         'Unfortunately, you entered an invalid code.',
